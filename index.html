@@ -1,31 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOOVA - User Profile Collection Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOOVA - Profile Collection</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h2 { color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
-        .section { margin-bottom: 25px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fafafa; }
-        .section-title { font-weight: bold; color: #3498db; margin-bottom: 15px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
-        .form-group { margin-bottom: 12px; }
+        :root {
+            --soova-blue: #1a73e8;
+            --soova-green: #2e7d32;
+            --light-bg: #f8f9fa;
+        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #eef2f7; padding: 15px; margin: 0; }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: white; 
+            padding: 15px; 
+            border-radius: 12px 12px 0 0; 
+            border-bottom: 4px solid var(--soova-blue);
+        }
+        .logo-box { width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--soova-blue); border: 2px solid var(--soova-green); font-size: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { max-width: 800px; margin: auto; background: white; padding: 0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .form-content { padding: 25px; }
+        h2 { color: var(--soova-blue); text-align: center; margin: 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .section { margin-bottom: 25px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: var(--light-bg); border-left: 5px solid var(--soova-green); }
+        .section-title { font-weight: bold; color: var(--soova-blue); margin-bottom: 15px; text-transform: uppercase; font-size: 13px; }
         label { display: block; margin-bottom: 5px; font-weight: 600; color: #444; font-size: 13px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
-        input[readonly] { background-color: #eee; cursor: not-allowed; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
         .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn { padding: 15px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
-        .save-btn { background-color: #3498db; }
-        .download-btn { background-color: #27ae60; }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        #status { margin-top: 15px; text-align: center; font-weight: bold; color: #27ae60; }
-        footer { margin-top: 30px; text-align: center; font-size: 12px; color: #7f8c8d; border-top: 1px solid #ddd; padding-top: 15px; }
+        .btn { padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; text-transform: uppercase; }
+        .save-btn { background: linear-gradient(to right, var(--soova-blue), #0d47a1); }
+        .download-btn { background: linear-gradient(to right, var(--soova-green), #1b5e20); position: relative; }
+        .footer { background: #333; color: #ccc; text-align: center; padding: 20px; font-size: 12px; margin-top: 20px; }
+        #status { margin-top: 15px; text-align: center; font-weight: bold; color: var(--soova-green); }
     </style>
 </head>
-<body>
+<body onload="updateButtonCount()">
 
+<div class="container">
+    <div class="header">
+        <div class="logo-box">SOOVA</div>
+        <div style="text-align:center;">
+            <h2 style="margin:0; font-size: 28px;">SOOVA</h2>
+            <small style="color:var(--soova-green); font-weight:bold;">Empowering Communities</small>
+        </div>
+        <div class="logo-box">SOOVA</div>
+    </div>
 <div class="container">
     <h2>Profile Collection Portal</h2>
     <form id="profileForm">
@@ -265,6 +283,7 @@
 
 </body>
 </html>
+
 
 
 
