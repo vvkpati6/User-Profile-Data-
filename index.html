@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Collection App</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        .section { margin-bottom: 25px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fafafa; }
+        .section-title { font-weight: bold; color: #3498db; margin-bottom: 15px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #444; font-size: 13px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .btn { padding: 15px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
+        .save-btn { background-color: #3498db; }
+        .download-btn { background-color: #27ae60; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        #status { margin-top: 15px; text-align: center; font-weight: bold; color: #27ae60; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Profile Collection Portal</h2>
+    <form id="profileForm">
+        
+        <div class="section">
+            <div class="section-title">1. Collection Info</div>
+            <div class="grid">
+                <div class="form-group"><label>Date and Time</label><input type="datetime-local" id="field1"></div>
+                <div class="form-group"><label>Collector Name</label><input type="text" id="field2"></div>
+                <div class="form-group"><label>Mode of Collection</label><input type="text" id="field3"></div>
+            </div>
+            <div class="form-group"><label>Partner Network / Private Group</label><input type="text" id="field4"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. Beneficiary Profile</div>
+            <div class="form-group"><label>Name of the Beneficiary</label><input type="text" id="field5" required></div>
+            <div class="grid">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="field6"><option>Male</option><option>Female</option><option>Other</option></select>
+                </div>
+                <div class="form-group"><label>Year of Birth</label><input type="number" id="field7" placeholder="YYYY"></div>
+            </div>
+            <div class="grid">
+                <div class="form-group"><label>Mobile</label><input type="tel" id="field8"></div>
+                <div class="form-group">
+                    <label>WhatsApp Linked?</label>
+                    <select id="field9"><option>Yes</option><option>No</option></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. Location Details</div>
+            <div class="grid">
+                <div class="form-group"><label>State</label><input type="text" id="field10"></div>
+                <div class="form-group"><label>District</label><input type="text" id="field11"></div>
+            </div>
+            <div class="grid">
+                <div class="form-group"><label>Block</label><input type="text" id="field12"></div>
+                <div class="form-group"><label>Revenue Village</label><input type="text" id="field13"></div>
+            </div>
+            <div class="form-group"><label>Sub Village / Hamlet</label><input type="text" id="field14"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. Occupation & Land</div>
+            <div class="form-group"><label>Occupation Category</label><input type="text" id="field15"></div>
+            <div class="form-group">
+                <label>Profile Type</label>
+                <select id="field16"><option>New User Profile</option><option>Update User Profile</option></select>
+            </div>
+            <div class="form-group"><label>Total Land Holding (Acre)</label><input type="number" step="0.01" id="field17"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">5. Crop Details</div>
+            <div class="grid">
+                <div><label>Crop 1</label><input type="text" id="field18"></div>
+                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field19"></div>
+            </div>
+            <div class="grid">
+                <div><label>Crop 2</label><input type="text" id="field20"></div>
+                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field21"></div>
+            </div>
+            <div class="grid">
+                <div><label>Crop 3</label><input type="text" id="field22"></div>
+                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field23"></div>
+            </div>
+            <div class="grid">
+                <div><label>Crop 4</label><input type="text" id="field24"></div>
+                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field25"></div>
+            </div>
+            <div class="grid">
+                <div><label>Crop 5</label><input type="text" id="field26"></div>
+                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field27"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">6. Livestock</div>
+            <div class="grid">
+                <div><label>No of Goats</label><input type="number" id="field28"></div>
+                <div><label>No of Poultry</label><input type="number" id="field29"></div>
+                <div><label>No of Cows</label><input type="number" id="field30"></div>
+            </div>
+            <div class="grid">
+                <div><label>Other Animal 1</label><input type="text" id="field31"></div>
+                <div><label>Nos</label><input type="number" id="field32"></div>
+            </div>
+            <div class="grid">
+                <div><label>Other Animal 2</label><input type="text" id="field33"></div>
+                <div><label>Nos</label><input type="number" id="field34"></div>
+            </div>
+            <div class="grid">
+                <div><label>Other Animal 3</label><input type="text" id="field35"></div>
+                <div><label>Nos</label><input type="number" id="field36"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">7. Other Activities</div>
+            <div class="grid">
+                <div class="form-group"><label>Milk Societies?</label><select id="field37"><option>No</option><option>Yes</option></select></div>
+                <div class="form-group"><label>Poultry Farming?</label><select id="field38"><option>No</option><option>Yes</option></select></div>
+            </div>
+            <div class="grid">
+                <div class="form-group"><label>Craft Owner</label><input type="text" id="field39"></div>
+                <div class="form-group"><label>Type of Craft</label><input type="text" id="field40"></div>
+            </div>
+            <div class="grid">
+                <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field41"></div>
+                <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field42"></div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn save-btn" onclick="saveData()">💾 Save Entry</button>
+            <button type="button" class="btn download-btn" onclick="downloadCSV()">📥 Download All Data (Excel CSV)</button>
+        </div>
+        <div id="status"></div>
+    </form>
+</div>
+
+<script>
+    const HEADERS = [
+        "Date and Time", "Collector Name", "Mode of Collection", "Partner Network", 
+        "Beneficiary Name", "Gender", "Year of Birth", "Mobile", "WhatsApp Linked", 
+        "State", "District", "Block", "Revenue Village", "Sub Village", 
+        "Occupation Category", "Profile Type", "Total Land", 
+        "Crop 1", "Land 1", "Crop 2", "Land 2", "Crop 3", "Land 3", "Crop 4", "Land 4", "Crop 5", "Land 5",
+        "No of Goats", "No of Poultry", "No of Cows", 
+        "Other Animal 1", "Nos 1", "Other Animal 2", "Nos 2", "Other Animal 3", "Nos 3",
+        "Milk Societies", "Poultry Farming", "Craft Owner", "Type of Craft", "Gear/Net", "Fish Landing Centre"
+    ];
+
+    function saveData() {
+        const name = document.getElementById('field5').value;
+        if(!name) { alert("Please enter the Beneficiary Name."); return; }
+
+        let entry = {};
+        for(let i=1; i<=42; i++) {
+            entry[HEADERS[i-1]] = document.getElementById('field' + i).value;
+        }
+
+        let db = JSON.parse(localStorage.getItem('fullSurveyDB')) || [];
+        db.push(entry);
+        localStorage.setItem('fullSurveyDB', JSON.stringify(db));
+
+        document.getElementById('status').innerText = "✅ Entry Saved! Total records: " + db.length;
+        document.getElementById('profileForm').reset();
+        window.scrollTo(0,0);
+        setTimeout(() => { document.getElementById('status').innerText = ""; }, 3000);
+    }
+
+    function downloadCSV() {
+        const data = JSON.parse(localStorage.getItem('fullSurveyDB'));
+        if (!data || data.length === 0) { alert("No data to export."); return; }
+
+        const csvRows = [];
+        csvRows.push(HEADERS.join(","));
+
+        for (const row of data) {
+            const values = HEADERS.map(header => {
+                const escaped = ('' + (row[header] || "")).replace(/"/g, '""');
+                return `"${escaped}"`;
+            });
+            csvRows.push(values.join(","));
+        }
+
+        const csvContent = "\uFEFF" + csvRows.join("\n");
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'Profile_Data_Export.csv');
+        a.click();
+    }
+</script>
+
+</body>
+</html>
+
+        
