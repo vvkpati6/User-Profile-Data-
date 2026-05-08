@@ -34,13 +34,18 @@
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-X7KN9CS113"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-X7KN9CS113');
+  // This part helps track engagement and session details more accurately
+  gtag('config', 'G-XXXXXXXXXX', {
+    'send_page_view': true,
+    'cookie_flags': 'SameSite=None;Secure'
+  });
+</script>
 </script>
 <body onload="updateButtonCount()">
 
