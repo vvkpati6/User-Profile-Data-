@@ -151,9 +151,10 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Revenue Village</label>
+                        <label>Revenue Village 🔍 (Type to Search)</label>
                         <div id="villageContainer">
-                            <select id="field14"></select>
+                            <input type="text" id="field14" list="villageList" placeholder="Type or select village name...">
+                            <datalist id="villageList"></datalist>
                         </div>
                     </div>
                 </div>
@@ -211,34 +212,24 @@
                     <div><label>No of Goats</label><input type="number" id="field29"></div>
                     <div><label>No of Poultry</label><input type="number" id="field30"></div>
                     <div><label>No of Cows</label><input type="number" id="field31"></div>
-                </div>
-                <div class="grid">
-                    <div><label>Other Animal 1</label><input type="text" id="field32"></div>
-                    <div><label>Nos</label><input type="number" id="field33"></div>
-                </div>
-                <div class="grid">
-                    <div><label>Other Animal 2</label><input type="text" id="field34"></div>
-                    <div><label>Nos</label><input type="number" id="field35"></div>
-                </div>
-                <div class="grid">
-                    <div><label>Other Animal 3</label><input type="text" id="field36"></div>
-                    <div><label>Nos</label><input type="number" id="field37"></div>
+                    <div><label>No of Pigs</label><input type="number" id="field32"></div>
+                    <div><label>No of Sheeps</label><input type="number" id="field33"></div>
                 </div>
             </div>
 
             <div class="section">
                 <div class="section-title">7. Other Activities</div>
                 <div class="grid">
-                    <div class="form-group"><label>Milk Societies?</label><select id="field38"><option>No</option><option>Yes</option></select></div>
-                    <div class="form-group"><label>Poultry Farming?</label><select id="field39"><option>No</option><option>Yes</option></select></div>
+                    <div class="form-group"><label>Milk Societies?</label><select id="field34"><option>No</option><option>Yes</option></select></div>
+                    <div class="form-group"><label>Poultry Farming?</label><select id="field35"><option>No</option><option>Yes</option></select></div>
                 </div>
                 <div class="grid">
-                    <div class="form-group"><label>Craft Owner</label><input type="text" id="field40"></div>
-                    <div class="form-group"><label>Type of Craft</label><input type="text" id="field41"></div>
+                    <div class="form-group"><label>Craft Owner</label><input type="text" id="field36"></div>
+                    <div class="form-group"><label>Type of Craft</label><input type="text" id="field37"></div>
                 </div>
                 <div class="grid">
-                    <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field42"></div>
-                    <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field43"></div>
+                    <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field38"></div>
+                    <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field39"></div>
                 </div>
             </div>
 
@@ -262,8 +253,8 @@
             </div>
 
             <div id="adminPanel" style="display: none; margin-top: 20px;">
-                <h4 style="margin-bottom: 5px;">📱 Access & Visitor Logs</h4>
-                <p style="font-size: 12px; color: #666;">Tracks devices, access times, user-agents, and location data when accessing this link.</p>
+                <h4 style="margin-bottom: 5px;">📱 Visitor Access Logs (Location, Device & OS)</h4>
+                <p style="font-size: 12px; color: #666;">Tracks real-time device details, Android versions, access time, and location names.</p>
                 <button class="sm-btn" onclick="clearAccessLogs()" style="background:#d93025;">Clear Access Logs</button>
                 
                 <div class="table-responsive">
@@ -271,10 +262,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Timestamp</th>
-                                <th>Device / Mobile Info</th>
-                                <th>Screen / OS</th>
-                                <th>Location (IP Info)</th>
+                                <th>Date & Time</th>
+                                <th>Device Name / Brand</th>
+                                <th>Android / OS Version</th>
+                                <th>Location Name</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -310,7 +301,7 @@
     </div>
     <footer>
         Made with ❤️ by <b>Vivek Aryan Pati</b><br>
-        Copyright © <b>SOOVA 2026</b>
+        Copyright © <b>SOOVA 2026-27</b>
     </footer>
 </div>
 
@@ -537,40 +528,78 @@
         updateButtonCount();
     }
 
-    // AUTOMATIC LINK ACCESS & VISITOR TRACKER
+    // AUTOMATIC LINK ACCESS, DEVICE, ANDROID & LOCATION TRACKER
     function trackLinkAccess() {
-        const userAgent = navigator.userAgent;
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-        const deviceType = isMobile ? "📱 Mobile Device" : "💻 Desktop / Laptop";
-        const screenRes = `${window.screen.width}x${window.screen.height}`;
+        const ua = navigator.userAgent;
+        let deviceBrand = "Unknown Device";
+        let osVersion = "Unknown OS";
+
+        // Detect Mobile Model / OS
+        if (/Android/i.test(ua)) {
+            const androidMatch = ua.match(/Android\s([0-9\.]+)/i);
+            osVersion = androidMatch ? `Android ${androidMatch[1]}` : "Android OS";
+            
+            // Extract Device Model if present
+            if (/Samsung|SM-/i.test(ua)) deviceBrand = "Samsung";
+            else if (/Redmi|Mi|POCO/i.test(ua)) deviceBrand = "Xiaomi / Redmi";
+            else if (/Vivo/i.test(ua)) deviceBrand = "Vivo";
+            else if (/OPPO/i.test(ua)) deviceBrand = "OPPO";
+            else if (/Realme/i.test(ua)) deviceBrand = "Realme";
+            else if (/OnePlus/i.test(ua)) deviceBrand = "OnePlus";
+            else if (/Pixel/i.test(ua)) deviceBrand = "Google Pixel";
+            else deviceBrand = "Android Mobile";
+        } else if (/iPhone|iPad|iPod/i.test(ua)) {
+            const iosMatch = ua.match(/OS\s([0-9\_]+)/i);
+            osVersion = iosMatch ? `iOS ${iosMatch[1].replace(/_/g, '.')}` : "iOS";
+            deviceBrand = /iPad/i.test(ua) ? "Apple iPad" : "Apple iPhone";
+        } else if (/Windows/i.test(ua)) {
+            deviceBrand = "Windows PC / Laptop";
+            osVersion = "Windows OS";
+        } else if (/Macintosh/i.test(ua)) {
+            deviceBrand = "Apple Mac";
+            osVersion = "macOS";
+        }
+
         const timestamp = new Date().toLocaleString();
 
-        const accessInfo = {
-            timestamp: timestamp,
-            device: deviceType,
-            screen: screenRes,
-            userAgent: userAgent.substring(0, 60) + "...",
-            locationInfo: "Auto Captured (Browser Access)"
-        };
+        // Fetch Location via Free API
+        fetch("https://ipwho.is/")
+            .then(res => res.json())
+            .then(data => {
+                let locationName = "Unknown Location";
+                if (data && data.success) {
+                    locationName = `${data.city || ""}, ${data.region || ""}, ${data.country || ""}`.replace(/^,\s*/, '');
+                }
+                saveAccessLog(timestamp, deviceBrand, osVersion, locationName);
+            })
+            .catch(() => {
+                saveAccessLog(timestamp, deviceBrand, osVersion, "Location Lookup Failed");
+            });
+    }
 
+    function saveAccessLog(timestamp, device, os, location) {
+        const accessInfo = { timestamp, device, os, location };
         let logs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
-        logs.unshift(accessInfo); // Latest access first
+        logs.unshift(accessInfo);
         localStorage.setItem('accessLogsDB', JSON.stringify(logs));
     }
 
+    // DYNAMIC SEARCHABLE VILLAGE OPTIONS
     function updateVillages() {
         const block = document.getElementById('field13').value;
-        const container = document.getElementById('villageContainer');
+        const datalist = document.getElementById('villageList');
+        const villageInput = document.getElementById('field14');
+        
+        // Clear existing options & input
+        datalist.innerHTML = "";
+        villageInput.value = "";
 
         if (VILLAGES_DATA[block]) {
-            let selectHTML = '<select id="field14">';
             VILLAGES_DATA[block].forEach(village => {
-                selectHTML += `<option value="${village}">${village}</option>`;
+                const opt = document.createElement('option');
+                opt.value = village;
+                datalist.appendChild(opt);
             });
-            selectHTML += '</select>';
-            container.innerHTML = selectHTML;
-        } else {
-            container.innerHTML = '<input type="text" id="field14" placeholder="Enter Village Name">';
         }
     }
 
@@ -692,8 +721,8 @@
                     <td>${idx + 1}</td>
                     <td>${log.timestamp}</td>
                     <td><b>${log.device}</b></td>
-                    <td>${log.screen}</td>
-                    <td>${log.userAgent}</td>
+                    <td>${log.os}</td>
+                    <td>📍 ${log.location}</td>
                 </tr>
             `;
         });
