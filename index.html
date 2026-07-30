@@ -1,4 +1,7 @@
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOOVA - Profile Collection</title>
     <style>
@@ -17,8 +20,9 @@
             border-radius: 12px 12px 0 0; 
             border-bottom: 4px solid var(--soova-blue);
         }
-        .logo-box { width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--soova-blue); border: 2px solid var(--soova-blue); }
-        .logo-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+        .logo-box { width: 80px; height: 80px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--soova-blue); border: 2px solid var(--soova-blue); }
+        .logo-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+        .logo-spacer { width: 80px; height: 80px; }
         .container { max-width: 800px; margin: auto; background: white; padding: 0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
         .form-content { padding: 25px; }
         h2 { color: var(--soova-blue); text-align: center; margin: 10px 0; text-transform: uppercase; letter-spacing: 1px; }
@@ -48,17 +52,16 @@
     'cookie_flags': 'SameSite=None;Secure'
   });
 </script>
-</script>
 <body onload="updateButtonCount()">
 
 <div class="container">
     <div class="header">
-        <div class="logo-box"><img src="soova_logo.png" alt="SOOVA logo" class="logo-img"></div>
-        <div style="text-align:center;">
+        <div class="logo-box"><img src="images/soova_logo.png" alt="SOOVA logo — Social Organisation On Various Aspects" title="SOOVA logo — Social Organisation On Various Aspects" class="logo-img"></div>
+        <div style="text-align:center; flex:1;">
             <h2 style="margin:0; font-size: 28px;">SOOVA</h2>
             <small style="color:var(--soova-green); font-weight:bold;">Empowering Communities</small>
         </div>
-        <div class="logo-box"><img src="soova_logo.png" alt="SOOVA logo" class="logo-img"></div>
+        <div class="logo-spacer"></div>
     </div>
 <div class="container">
     <h2>User Profile Collection Portal</h2>
@@ -213,6 +216,9 @@
 </div>
 
 <script>
+    // no-op fallback so the onload reference doesn't break if you don't add count logic
+    function updateButtonCount(){ /* intentionally empty for now */ }
+
     const HEADERS = [
         "Date and Time", "Collector Name", "Mode of Collection", "Partner Network", 
         "Beneficiary Name", "Gender", "Year of Birth", "Mobile", "WhatsApp Linked", 
