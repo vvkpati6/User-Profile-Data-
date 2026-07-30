@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOOVA - Profile Collection</title>
     <style>
         :root {
@@ -11,6 +11,8 @@
             --light-bg: #f8f9fa;
         }
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #eef2f7; padding: 15px; margin: 0; }
+        
+        /* Header & Logo Styles */
         .header { 
             display: flex; 
             justify-content: space-between; 
@@ -20,9 +22,13 @@
             border-radius: 12px 12px 0 0; 
             border-bottom: 4px solid var(--soova-blue);
         }
-        .logo-box { width: 80px; height: 80px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--soova-blue); border: 2px solid var(--soova-blue); }
-        .logo-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
-        .logo-spacer { width: 80px; height: 80px; }
+        .header-logo {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
         .container { max-width: 800px; margin: auto; background: white; padding: 0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
         .form-content { padding: 25px; }
         h2 { color: var(--soova-blue); text-align: center; margin: 10px 0; text-transform: uppercase; letter-spacing: 1px; }
@@ -35,7 +41,7 @@
         .btn { padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; text-transform: uppercase; }
         .save-btn { background: linear-gradient(to right, var(--soova-blue), #0d47a1); }
         .download-btn { background: linear-gradient(to right, var(--soova-green), #1b5e20); position: relative; }
-        .footer { background: #333; color: #ccc; text-align: center; padding: 20px; font-size: 12px; margin-top: 20px; }
+        footer { background: #333; color: #ccc; text-align: center; padding: 20px; font-size: 12px; margin-top: 20px; }
         #status { margin-top: 15px; text-align: center; font-weight: bold; color: var(--soova-green); }
     </style>
 </head>
@@ -43,10 +49,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);} 
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  // This part helps track engagement and session details more accurately
   gtag('config', 'G-XXXXXXXXXX', {
     'send_page_view': true,
     'cookie_flags': 'SameSite=None;Secure'
@@ -55,159 +59,161 @@
 <body onload="updateButtonCount()">
 
 <div class="container">
+    <!-- Header with actual SOOVA logo image -->
     <div class="header">
-        <div class="logo-box"><img src="images/IMG-20260625-WA0009" alt="SOOVA logo — Social Organisation On Various Aspects" title="SOOVA logo — Social Organisation On Various Aspects" class="logo-img"></div>
-        <div style="text-align:center; flex:1;">
+        <img src="soova_logo.png" alt="SOOVA Logo" class="header-logo">
+        <div style="text-align:center;">
             <h2 style="margin:0; font-size: 28px;">SOOVA</h2>
             <small style="color:var(--soova-green); font-weight:bold;">Empowering Communities</small>
         </div>
-        <div class="logo-spacer"></div>
+        <img src="soova_logo.png" alt="SOOVA Logo" class="header-logo">
     </div>
-<div class="container">
-    <h2>User Profile Collection Portal</h2>
-    <form id="profileForm">
-        
-        <div class="section">
-            <div class="section-title">1. Collection Info</div>
-            <div class="grid">
-                <div class="form-group">
-                    <label>Date and Time (Auto)</label>
-                    <input type="text" id="field1" readonly placeholder="Will be captured on save">
+
+    <div class="form-content">
+        <h2>User Profile Collection Portal</h2>
+        <form id="profileForm">
+            
+            <div class="section">
+                <div class="section-title">1. Collection Info</div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Date and Time (Auto)</label>
+                        <input type="text" id="field1" readonly placeholder="Will be captured on save">
+                    </div>
+                    <div class="form-group"><label>Collector Name</label><input type="text" id="field2"></div>
+                    <div class="form-group">
+                        <label>Mode of Collection</label>
+                        <select id="field3">
+                            <option value="Physical">Physical</option>
+                            <option value="Telephonic">Telephonic</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group"><label>Collector Name</label><input type="text" id="field2"></div>
-                <div class="form-group">
-                    <label>Mode of Collection</label>
-                    <select id="field3">
-                        <option value="Physical">Physical</option>
-                        <option value="Telephonic">Telephonic</option>
-                    </select>
+                <div class="form-group"><label>Partner Network / Private Group</label><input type="text" id="field4" value="SOOVA" readonly></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">2. Beneficiary Profile</div>
+                <div class="form-group"><label>Name of the Beneficiary</label><input type="text" id="field5" required></div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="field6"><option>Male</option><option>Female</option><option>Other</option></select>
+                    </div>
+                    <div class="form-group"><label>Year of Birth</label><input type="number" id="field7" placeholder="YYYY"></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group"><label>Mobile (10 Digits)</label><input type="tel" id="field8" placeholder="e.g. 9876543210"></div>
+                    <div class="form-group">
+                        <label>WhatsApp Linked?</label>
+                        <select id="field9"><option>Yes</option><option>No</option></select>
+                    </div>
                 </div>
             </div>
-            <div class="form-group"><label>Partner Network / Private Group</label><input type="text" id="field4" value="SOOVA" readonly ></div>
-        </div>
 
-        <div class="section">
-            <div class="section-title">2. Beneficiary Profile</div>
-            <div class="form-group"><label>Name of the Beneficiary</label><input type="text" id="field5" required></div>
-            <div class="grid">
-                <div class="form-group">
-                    <label>Gender</label>
-                    <select id="field6"><option>Male</option><option>Female</option><option>Other</option></select>
+            <div class="section">
+                <div class="section-title">3. Location Details</div>
+                <div class="grid">
+                    <div class="form-group"><label>State</label><input type="text" id="field10" value="Odisha" readonly></div>
+                    <div class="form-group"><label>District</label><input type="text" id="field11" value="Mayurbhanj" readonly></div>
                 </div>
-                <div class="form-group"><label>Year of Birth</label><input type="number" id="field7" placeholder="YYYY"></div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Block</label>
+                        <select id="field12">
+                            <option value="Udala">Udala</option>
+                            <option value="Kaptipada">Kaptipada</option>
+                            <option value="Samakhunta">Samakhunta</option>
+                            <option value="Saraskana">Saraskana</option>
+                            <option value="Bangiriposi">Bangiriposi</option>
+                            <option value="Jashipur">Jashipur</option>
+                            <option value="Kuliana">Kuliana</option>
+                            <option value="Suliapada">Suliapada</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Revenue Village</label><input type="text" id="field13"></div>
+                </div>
+                <div class="form-group"><label>Sub Village / Hamlet</label><input type="text" id="field14"></div>
             </div>
-            <div class="grid">
-                <div class="form-group"><label>Mobile (10 Digits)</label><input type="tel" id="field8" placeholder="e.g. 9876543210"></div>
+
+            <div class="section">
+                <div class="section-title">4. Occupation & Land</div>
+                <div class="form-group"><label>Occupation Category</label><input type="text" id="field15"></div>
                 <div class="form-group">
-                    <label>WhatsApp Linked?</label>
-                    <select id="field9"><option>Yes</option><option>No</option></select>
+                    <label>Profile Type</label>
+                    <select id="field16"><option>New User Profile</option><option>Update User Profile</option></select>
+                </div>
+                <div class="form-group"><label>Total Land Holding (Acre)</label><input type="number" step="0.01" id="field17" value="0"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">5. Crop Details</div>
+                <div class="grid">
+                    <div><label>Crop 1</label><input type="text" id="field18"></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field19" class="land-input" value="0"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 2</label><input type="text" id="field20"></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field21" class="land-input" value="0"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 3</label><input type="text" id="field22"></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field23" class="land-input" value="0"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 4</label><input type="text" id="field24"></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field25" class="land-input" value="0"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 5</label><input type="text" id="field26"></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field27" class="land-input" value="0"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="section">
-            <div class="section-title">3. Location Details</div>
-            <div class="grid">
-                <div class="form-group"><label>State</label><input type="text" id="field10" value="Odisha" readonly></div>
-                <div class="form-group"><label>District</label><input type="text" id="field11" value="Mayurbhanj" readonly></div>
-            </div>
-            <div class="grid">
-                <div class="form-group">
-                    <label>Block</label>
-                    <select id="field12">
-                        <option value="Udala">Udala</option>
-                        <option value="Kaptipada">Kaptipada</option>
-                        <option value="Samakhunta">Samakhunta</option>
-                        <option value="Saraskana">Saraskana</option>
-                        <option value="Bangiriposi">Bangiriposi</option>
-                        <option value="Jashipur">Jashipur</option>
-                        <option value="Kuliana">Kuliana</option>
-                        <option value="Suliapada">Suliapada</option>
-                    </select>
+            <div class="section">
+                <div class="section-title">6. Livestock</div>
+                <div class="grid">
+                    <div><label>No of Goats</label><input type="number" id="field28"></div>
+                    <div><label>No of Poultry</label><input type="number" id="field29"></div>
+                    <div><label>No of Cows</label><input type="number" id="field30"></div>
                 </div>
-                <div class="form-group"><label>Revenue Village</label><input type="text" id="field13"></div>
+                <div class="grid">
+                    <div><label>Other Animal 1</label><input type="text" id="field31"></div>
+                    <div><label>Nos</label><input type="number" id="field32"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 2</label><input type="text" id="field33"></div>
+                    <div><label>Nos</label><input type="number" id="field34"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 3</label><input type="text" id="field35"></div>
+                    <div><label>Nos</label><input type="number" id="field36"></div>
+                </div>
             </div>
-            <div class="form-group"><label>Sub Village / Hamlet</label><input type="text" id="field14"></div>
-        </div>
 
-        <div class="section">
-            <div class="section-title">4. Occupation & Land</div>
-            <div class="form-group"><label>Occupation Category</label><input type="text" id="field15"></div>
-            <div class="form-group">
-                <label>Profile Type</label>
-                <select id="field16"><option>New User Profile</option><option>Update User Profile</option></select>
+            <div class="section">
+                <div class="section-title">7. Other Activities</div>
+                <div class="grid">
+                    <div class="form-group"><label>Milk Societies?</label><select id="field37"><option>No</option><option>Yes</option></select></div>
+                    <div class="form-group"><label>Poultry Farming?</label><select id="field38"><option>No</option><option>Yes</option></select></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group"><label>Craft Owner</label><input type="text" id="field39"></div>
+                    <div class="form-group"><label>Type of Craft</label><input type="text" id="field40"></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field41"></div>
+                    <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field42"></div>
+                </div>
             </div>
-            <div class="form-group"><label>Total Land Holding (Acre)</label><input type="number" step="0.01" id="field17" value="0"></div>
-        </div>
 
-        <div class="section">
-            <div class="section-title">5. Crop Details</div>
-            <div class="grid">
-                <div><label>Crop 1</label><input type="text" id="field18"></div>
-                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field19" class="land-input" value="0"></div>
+            <div class="btn-container">
+                <button type="button" class="btn save-btn" onclick="saveData()">💾 Save Entry</button>
+                <button type="button" class="btn download-btn" onclick="downloadCSV()">📥 Download All Data (Excel CSV)</button>
             </div>
-            <div class="grid">
-                <div><label>Crop 2</label><input type="text" id="field20"></div>
-                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field21" class="land-input" value="0"></div>
-            </div>
-            <div class="grid">
-                <div><label>Crop 3</label><input type="text" id="field22"></div>
-                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field23" class="land-input" value="0"></div>
-            </div>
-            <div class="grid">
-                <div><label>Crop 4</label><input type="text" id="field24"></div>
-                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field25" class="land-input" value="0"></div>
-            </div>
-            <div class="grid">
-                <div><label>Crop 5</label><input type="text" id="field26"></div>
-                <div><label>Land (Acre)</label><input type="number" step="0.01" id="field27" class="land-input" value="0"></div>
-            </div>
-        </div>
-
-       <div class="section">
-            <div class="section-title">6. Livestock</div>
-            <div class="grid">
-                <div><label>No of Goats</label><input type="number" id="field28"></div>
-                <div><label>No of Poultry</label><input type="number" id="field29"></div>
-                <div><label>No of Cows</label><input type="number" id="field30"></div>
-            </div>
-            <div class="grid">
-                <div><label>Other Animal 1</label><input type="text" id="field31"></div>
-                <div><label>Nos</label><input type="number" id="field32"></div>
-            </div>
-            <div class="grid">
-                <div><label>Other Animal 2</label><input type="text" id="field33"></div>
-                <div><label>Nos</label><input type="number" id="field34"></div>
-            </div>
-            <div class="grid">
-                <div><label>Other Animal 3</label><input type="text" id="field35"></div>
-                <div><label>Nos</label><input type="number" id="field36"></div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">7. Other Activities</div>
-            <div class="grid">
-                <div class="form-group"><label>Milk Societies?</label><select id="field37"><option>No</option><option>Yes</option></select></div>
-                <div class="form-group"><label>Poultry Farming?</label><select id="field38"><option>No</option><option>Yes</option></select></div>
-            </div>
-            <div class="grid">
-                <div class="form-group"><label>Craft Owner</label><input type="text" id="field39"></div>
-                <div class="form-group"><label>Type of Craft</label><input type="text" id="field40"></div>
-            </div>
-            <div class="grid">
-                <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field41"></div>
-                <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field42"></div>
-            </div>
-            </div>
-        </div>
-
-        <div class="btn-container">
-            <button type="button" class="btn save-btn" onclick="saveData()">💾 Save Entry</button>
-            <button type="button" class="btn download-btn" onclick="downloadCSV()">📥 Download All Data (Excel CSV)</button>
-        </div>
-        <div id="status"></div>
-    </form>
+            <div id="status"></div>
+        </form>
+    </div>
 
     <footer>
         Made with ❤️ by <b>Vivek Aryan Pati</b><br>
@@ -216,9 +222,6 @@
 </div>
 
 <script>
-    // no-op fallback so the onload reference doesn't break if you don't add count logic
-    function updateButtonCount(){ /* intentionally empty for now */ }
-
     const HEADERS = [
         "Date and Time", "Collector Name", "Mode of Collection", "Partner Network", 
         "Beneficiary Name", "Gender", "Year of Birth", "Mobile", "WhatsApp Linked", 
@@ -230,6 +233,13 @@
         "Milk Societies", "Poultry Farming", "Craft Owner", "Type of Craft", "Gear/Net", "Fish Landing Centre"
     ];
 
+    function updateButtonCount() {
+        const db = JSON.parse(localStorage.getItem('fullSurveyDB')) || [];
+        if(db.length > 0) {
+            document.getElementById('status').innerText = "📊 Current saved records: " + db.length;
+        }
+    }
+
     function saveData() {
         const name = document.getElementById('field5').value;
         const mobile = document.getElementById('field8').value;
@@ -237,11 +247,22 @@
         
         // Validation: Name
         if(!name) { alert("Please enter the Beneficiary Name."); return; }
-
+        
         // Validation: Mobile (Exactly 10 digits)
         const mobilePattern = /^[0-9]{10}$/;
         if(!mobilePattern.test(mobile)) {
             alert("Error: Mobile number must be exactly 10 digits.");
+            return;
+        }
+
+        // Validation: Land Logic
+        let sumCropLand = 0;
+        const landInputs = document.querySelectorAll('.land-input');
+        landInputs.forEach(input => {
+            sumCropLand += parseFloat(input.value) || 0;
+        });
+        if(sumCropLand > totalLand) {
+            alert(`Error: Total land used for crops (${sumCropLand} Acres) cannot exceed Total Land Holding (${totalLand} Acres).`);
             return;
         }
 
@@ -266,9 +287,10 @@
         // Reset fixed fields
         document.getElementById('field10').value = "Odisha";
         document.getElementById('field11').value = "Mayurbhanj";
+        document.getElementById('field4').value = "SOOVA";
         
         window.scrollTo(0,0);
-        setTimeout(() => { document.getElementById('status').innerText = ""; }, 3000);
+        setTimeout(() => { updateButtonCount(); }, 3000);
     }
 
     function downloadCSV() {
@@ -295,6 +317,5 @@
         a.click();
     }
 </script>
-
 </body>
-</html>
+                        </html>
