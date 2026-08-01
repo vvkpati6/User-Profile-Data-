@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOOVA - Profile Collection & Admin Portal</title>
+    <title>SOOVA - Profile Collection & Global Admin Portal</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -212,24 +212,34 @@
                     <div><label>No of Goats</label><input type="number" id="field29"></div>
                     <div><label>No of Poultry</label><input type="number" id="field30"></div>
                     <div><label>No of Cows</label><input type="number" id="field31"></div>
-                    <div><label>No of Pigs</label><input type="number" id="field32"></div>
-                    <div><label>No of Sheeps</label><input type="number" id="field33"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 1</label><input type="text" id="field32"></div>
+                    <div><label>Nos</label><input type="number" id="field33"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 2</label><input type="text" id="field34"></div>
+                    <div><label>Nos</label><input type="number" id="field35"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 3</label><input type="text" id="field36"></div>
+                    <div><label>Nos</label><input type="number" id="field37"></div>
                 </div>
             </div>
 
             <div class="section">
                 <div class="section-title">7. Other Activities</div>
                 <div class="grid">
-                    <div class="form-group"><label>Milk Societies?</label><select id="field34"><option>No</option><option>Yes</option></select></div>
-                    <div class="form-group"><label>Poultry Farming?</label><select id="field35"><option>No</option><option>Yes</option></select></div>
+                    <div class="form-group"><label>Milk Societies?</label><select id="field38"><option>No</option><option>Yes</option></select></div>
+                    <div class="form-group"><label>Poultry Farming?</label><select id="field39"><option>No</option><option>Yes</option></select></div>
                 </div>
                 <div class="grid">
-                    <div class="form-group"><label>Craft Owner</label><input type="text" id="field36"></div>
-                    <div class="form-group"><label>Type of Craft</label><input type="text" id="field37"></div>
+                    <div class="form-group"><label>Craft Owner</label><input type="text" id="field40"></div>
+                    <div class="form-group"><label>Type of Craft</label><input type="text" id="field41"></div>
                 </div>
                 <div class="grid">
-                    <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field38"></div>
-                    <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field39"></div>
+                    <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field42"></div>
+                    <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field43"></div>
                 </div>
             </div>
 
@@ -240,12 +250,12 @@
             <div id="status"></div>
         </form>
 
-        <!-- SECURE ADMINISTRATION BLOCK -->
+        <!-- SECURE GLOBAL ADMINISTRATION BLOCK -->
         <hr style="margin: 40px 0; border: 0; border-top: 2px dashed #ccc;">
         
         <div class="section admin-section">
-            <div class="section-title admin-title">🔒 Administration & Access Tracking Block</div>
-            <p style="font-size: 13px; color: #555;">Restricted access area. Authorised admin authentication required.</p>
+            <div class="section-title admin-title">🔒 Administration & Global Access Tracking</div>
+            <p style="font-size: 13px; color: #555;">Restricted access area. Shows visitors opening this link from any mobile device globally.</p>
             
             <div id="adminLoginArea" class="grid" style="grid-template-columns: 2fr 1fr;">
                 <input type="password" id="adminPassword" placeholder="Enter Admin Password" autocomplete="off" spellcheck="false">
@@ -253,8 +263,11 @@
             </div>
 
             <div id="adminPanel" style="display: none; margin-top: 20px;">
-                <h4 style="margin-bottom: 5px;">📱 Visitor Access Logs (Location, Device & OS)</h4>
-                <p style="font-size: 12px; color: #666;">Tracks real-time device details, Android versions, access time, and location names.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4 style="margin: 0;">📱 Global Access Logs (All Devices & Mobiles)</h4>
+                    <button class="sm-btn" onclick="loadAdminData()" style="background:#1a73e8;">🔄 Refresh Logs</button>
+                </div>
+                <p style="font-size: 12px; color: #666;">Shows every device/mobile opening this page worldwide with real-time location and OS details.</p>
                 <button class="sm-btn" onclick="clearAccessLogs()" style="background:#d93025;">Clear Access Logs</button>
                 
                 <div class="table-responsive">
@@ -301,7 +314,7 @@
     </div>
     <footer>
         Made with ❤️ by <b>Vivek Aryan Pati</b><br>
-        Copyright © <b>SOOVA 2026-27</b>
+        Copyright © <b>SOOVA 2026</b>
     </footer>
 </div>
 
@@ -522,13 +535,17 @@
         ]
     };
 
+    // CENTRAL FREE CLOUD LOGGING CONFIGURATION (JSONBin API)
+    const CLOUD_BIN_ID = "66a36f94e41b4d34e4168a3f"; 
+    const CLOUD_API_URL = "https://api.jsonbin.io/v3/b/66a36f94e41b4d34e4168a3f";
+
     function initForm() {
         trackLinkAccess();
         updateVillages();
         updateButtonCount();
     }
 
-    // AUTOMATIC LINK ACCESS, DEVICE, ANDROID & LOCATION TRACKER
+    // AUTOMATIC GLOBAL LINK ACCESS, DEVICE, ANDROID & LOCATION TRACKER
     function trackLinkAccess() {
         const ua = navigator.userAgent;
         let deviceBrand = "Unknown Device";
@@ -539,13 +556,12 @@
             const androidMatch = ua.match(/Android\s([0-9\.]+)/i);
             osVersion = androidMatch ? `Android ${androidMatch[1]}` : "Android OS";
             
-            // Extract Device Model if present
-            if (/Samsung|SM-/i.test(ua)) deviceBrand = "Samsung";
+            if (/Samsung|SM-/i.test(ua)) deviceBrand = "Samsung Mobile";
             else if (/Redmi|Mi|POCO/i.test(ua)) deviceBrand = "Xiaomi / Redmi";
-            else if (/Vivo/i.test(ua)) deviceBrand = "Vivo";
-            else if (/OPPO/i.test(ua)) deviceBrand = "OPPO";
-            else if (/Realme/i.test(ua)) deviceBrand = "Realme";
-            else if (/OnePlus/i.test(ua)) deviceBrand = "OnePlus";
+            else if (/Vivo/i.test(ua)) deviceBrand = "Vivo Mobile";
+            else if (/OPPO/i.test(ua)) deviceBrand = "OPPO Mobile";
+            else if (/Realme/i.test(ua)) deviceBrand = "Realme Mobile";
+            else if (/OnePlus/i.test(ua)) deviceBrand = "OnePlus Mobile";
             else if (/Pixel/i.test(ua)) deviceBrand = "Google Pixel";
             else deviceBrand = "Android Mobile";
         } else if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -562,7 +578,7 @@
 
         const timestamp = new Date().toLocaleString();
 
-        // Fetch Location via Free API
+        // Fetch Location via IP Lookup
         fetch("https://ipwho.is/")
             .then(res => res.json())
             .then(data => {
@@ -579,9 +595,32 @@
 
     function saveAccessLog(timestamp, device, os, location) {
         const accessInfo = { timestamp, device, os, location };
+        
+        // 1. Save Locally
         let logs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
         logs.unshift(accessInfo);
         localStorage.setItem('accessLogsDB', JSON.stringify(logs));
+
+        // 2. Sync to Global Central Cloud
+        syncToCloudLog(accessInfo);
+    }
+
+    function syncToCloudLog(logEntry) {
+        fetch(CLOUD_API_URL + "/latest")
+            .then(res => res.json())
+            .then(resData => {
+                let cloudData = resData.record || [];
+                if(!Array.isArray(cloudData)) cloudData = [];
+                cloudData.unshift(logEntry);
+                
+                // Push back to central cloud
+                fetch(CLOUD_API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cloudData)
+                }).catch(err => console.log("Cloud log sync error: ", err));
+            })
+            .catch(err => console.log("Cloud fetch error: ", err));
     }
 
     // DYNAMIC SEARCHABLE VILLAGE OPTIONS
@@ -590,7 +629,6 @@
         const datalist = document.getElementById('villageList');
         const villageInput = document.getElementById('field14');
         
-        // Clear existing options & input
         datalist.innerHTML = "";
         villageInput.value = "";
 
@@ -627,12 +665,10 @@
 
         // Validation: Individual crop land check against total land
         const landInputs = document.querySelectorAll('.land-input');
-        
         for (let input of landInputs) {
             const cropVal = parseFloat(input.value) || 0;
             const cropName = input.getAttribute('data-crop');
             
-            // Individual crop land cannot exceed Total Land Holding
             if (cropVal > totalLand) {
                 alert(`Error: Land area for ${cropName} (${cropVal} Acres) cannot exceed Total Land Holding (${totalLand} Acres).`);
                 return;
@@ -698,7 +734,6 @@
     // STRICT SECURE ADMIN FUNCTIONS
     function loginAdmin() {
         const pwd = document.getElementById('adminPassword').value;
-        // Password strictly set to Vivanstark786
         if (pwd === "Vivanstark786") {
             document.getElementById('adminLoginArea').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'block';
@@ -710,24 +745,32 @@
     }
 
     function loadAdminData() {
-        // Load Access Logs
-        const logs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
-        const logTbody = document.querySelectorAll('#accessLogTable tbody')[0];
-        logTbody.innerHTML = "";
-        
-        logs.forEach((log, idx) => {
-            logTbody.innerHTML += `
-                <tr>
-                    <td>${idx + 1}</td>
-                    <td>${log.timestamp}</td>
-                    <td><b>${log.device}</b></td>
-                    <td>${log.os}</td>
-                    <td>📍 ${log.location}</td>
-                </tr>
-            `;
-        });
+        // Fetch Central Cloud Logs & Combine with Local Logs
+        fetch(CLOUD_API_URL + "/latest")
+            .then(res => res.json())
+            .then(resData => {
+                let cloudLogs = resData.record || [];
+                let localLogs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
+                let combined = [...cloudLogs, ...localLogs];
+                
+                // Deduplicate logs
+                let uniqueLogs = [];
+                let seen = new Set();
+                for (let l of combined) {
+                    let key = `${l.timestamp}-${l.device}-${l.location}`;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        uniqueLogs.push(l);
+                    }
+                }
+                renderAccessTable(uniqueLogs);
+            })
+            .catch(() => {
+                let localLogs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
+                renderAccessTable(localLogs);
+            });
 
-        // Load Survey Records
+        // Load Saved Survey Records
         const records = JSON.parse(localStorage.getItem('fullSurveyDB')) || [];
         const recordTbody = document.querySelectorAll('#surveyRecordsTable tbody')[0];
         recordTbody.innerHTML = "";
@@ -746,10 +789,31 @@
         });
     }
 
+    function renderAccessTable(logs) {
+        const logTbody = document.querySelectorAll('#accessLogTable tbody')[0];
+        logTbody.innerHTML = "";
+        
+        logs.forEach((log, idx) => {
+            logTbody.innerHTML += `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td>${log.timestamp}</td>
+                    <td><b>${log.device}</b></td>
+                    <td>${log.os}</td>
+                    <td>📍 ${log.location}</td>
+                </tr>
+            `;
+        });
+    }
+
     function clearAccessLogs() {
-        if(confirm("Are you sure you want to clear all access logs?")) {
+        if(confirm("Are you sure you want to clear access logs?")) {
             localStorage.removeItem('accessLogsDB');
-            loadAdminData();
+            fetch(CLOUD_API_URL, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify([])
+            }).then(() => loadAdminData());
         }
     }
 
