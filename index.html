@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOOVA - Profile Collection & Global Admin Portal</title>
+    <title>SOOVA - System Maintenance</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -22,18 +22,189 @@
             --soova-dark: #333333;
             --light-bg: #f8f9fa;
         }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #eef2f7; padding: 15px; margin: 0; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #eef2f7; 
+            padding: 0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
         
-        /* Header & Logo Styles */
+        .maintenance-container { 
+            max-width: 600px; 
+            width: 90%;
+            margin: 20px auto; 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            overflow: hidden; 
+            text-align: center;
+        }
+
         .header { 
             display: flex; 
-            justify-content: space-between; 
+            justify-content: center; 
             align-items: center; 
+            gap: 15px;
             background: white; 
-            padding: 15px 25px; 
-            border-radius: 12px 12px 0 0; 
+            padding: 25px; 
             border-bottom: 4px solid var(--soova-blue);
         }
+        .header-logo {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .content { 
+            padding: 40px 25px; 
+        }
+
+        .gear-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: spin 8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 { 
+            color: var(--soova-blue); 
+            margin: 10px 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 24px;
+        }
+
+        p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Countdown Timer Styles */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .timer-box {
+            background: var(--light-bg);
+            border: 2px solid #e0e0e0;
+            border-top: 4px solid var(--soova-green);
+            border-radius: 10px;
+            padding: 15px 10px;
+            min-width: 80px;
+        }
+
+        .timer-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--soova-dark);
+        }
+
+        .timer-label {
+            font-size: 11px;
+            color: #777;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        footer { 
+            background: #333; 
+            color: #ccc; 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 12px; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="maintenance-container">
+    <!-- Header with SOOVA logo -->
+    <div class="header">
+        <img src="soova_logo.png" alt="SOOVA Logo" class="header-logo">
+        <div style="text-align:left;">
+            <h2 style="margin:0; font-size: 28px; color: var(--soova-blue);">SOOVA</h2>
+            <small style="color:var(--soova-green); font-weight:bold;">Empowering Communities</small>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="gear-icon">⚙️</div>
+        <h1>Maintenance Under Progress</h1>
+        <p>Our portal is currently undergoing scheduled system maintenance to serve you better. We will be back online on <b>August 14, 2026, at 12:00 AM IST</b>.</p>
+
+        <!-- Countdown Timer -->
+        <div class="timer-container">
+            <div class="timer-box">
+                <div class="timer-number" id="hours">00</div>
+                <div class="timer-label">Hours</div>
+            </div>
+            <div class="timer-box">
+                <div class="timer-number" id="minutes">00</div>
+                <div class="timer-label">Minutes</div>
+            </div>
+            <div class="timer-box">
+                <div class="timer-number" id="seconds">00</div>
+                <div class="timer-label">Seconds</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Made with ❤️ by <b>Vivek Aryan Pati</b><br>
+        Copyright © <b>SOOVA 2026</b>
+    </footer>
+</div>
+
+<script>
+    // Target completion time strictly locked to IST (Indian Standard Time UTC+5:30)
+    const targetDate = new Date("2026-08-14T00:00:00+05:30").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference <= 0) {
+            document.getElementById("hours").innerText = "00";
+            document.getElementById("minutes").innerText = "00";
+            document.getElementById("seconds").innerText = "00";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        // Calculate hours, minutes, and seconds remaining
+        const hours = Math.floor(difference / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Format single digits with leading zero
+        document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+        document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    }
+
+    // Run immediately and update every second
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
         .header-logo {
             width: 65px;
             height: 65px;
