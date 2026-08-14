@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOOVA - System Maintenance</title>
+    <title>SOOVA - Profile Collection & Global Admin Portal</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -22,35 +22,16 @@
             --soova-dark: #333333;
             --light-bg: #f8f9fa;
         }
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #eef2f7; 
-            padding: 0; 
-            margin: 0; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #eef2f7; padding: 15px; margin: 0; }
         
-        .maintenance-container { 
-            max-width: 600px; 
-            width: 90%;
-            margin: 20px auto; 
-            background: white; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            overflow: hidden; 
-            text-align: center;
-        }
-
+        /* Header & Logo Styles */
         .header { 
             display: flex; 
-            justify-content: center; 
+            justify-content: space-between; 
             align-items: center; 
-            gap: 15px;
             background: white; 
-            padding: 25px; 
+            padding: 15px 25px; 
+            border-radius: 12px 12px 0 0; 
             border-bottom: 4px solid var(--soova-blue);
         }
         .header-logo {
@@ -59,112 +40,278 @@
             object-fit: contain;
             border-radius: 50%;
         }
-
-        .content { 
-            padding: 40px 25px; 
-        }
-
-        .gear-icon {
-            font-size: 60px;
-            margin-bottom: 10px;
-            display: inline-block;
-            animation: spin 8s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        h1 { 
-            color: var(--soova-blue); 
-            margin: 10px 0; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            font-size: 24px;
-        }
-
-        p {
-            color: #555;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        /* Countdown Timer Styles */
-        .timer-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 25px 0;
-        }
-
-        .timer-box {
-            background: var(--light-bg);
-            border: 2px solid #e0e0e0;
-            border-top: 4px solid var(--soova-green);
-            border-radius: 10px;
-            padding: 15px 10px;
-            min-width: 80px;
-        }
-
-        .timer-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--soova-dark);
-        }
-
-        .timer-label {
-            font-size: 11px;
-            color: #777;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        footer { 
-            background: #333; 
-            color: #ccc; 
-            text-align: center; 
-            padding: 20px; 
-            font-size: 12px; 
-        }
+        .container { max-width: 850px; margin: auto; background: white; padding: 0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .form-content { padding: 25px; }
+        h2 { color: var(--soova-blue); text-align: center; margin: 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .section { margin-bottom: 25px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: var(--light-bg); border-left: 5px solid var(--soova-green); }
+        .admin-section { border-left-color: #d93025; }
+        .section-title { font-weight: bold; color: var(--soova-blue); margin-bottom: 15px; text-transform: uppercase; font-size: 13px; }
+        .admin-title { color: #d93025; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #444; font-size: 13px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .btn { padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; text-transform: uppercase; }
+        .save-btn { background: linear-gradient(to right, var(--soova-blue), #0d47a1); }
+        .download-btn { background: linear-gradient(to right, var(--soova-green), #1b5e20); position: relative; }
+        .admin-btn { background: linear-gradient(to right, #d93025, #800600); }
+        .sm-btn { padding: 8px 12px; font-size: 12px; margin-right: 5px; margin-top: 5px; cursor: pointer; border-radius: 4px; border: none; color: white; background: #555; }
+        
+        /* Table Styles */
+        .table-responsive { overflow-x: auto; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background-color: #f2f2f2; color: #333; }
+        
+        footer { background: #333; color: #ccc; text-align: center; padding: 20px; font-size: 12px; margin-top: 20px; }
+        #status { margin-top: 15px; text-align: center; font-weight: bold; color: var(--soova-green); }
     </style>
 </head>
-<body>
-
-<div class="maintenance-container">
-    <!-- Header with SOOVA logo -->
+<body onload="initForm()">
+<div class="container">
+    <!-- Header with single SOOVA logo -->
     <div class="header">
         <img src="soova_logo.png" alt="SOOVA Logo" class="header-logo">
-        <div style="text-align:left;">
-            <h2 style="margin:0; font-size: 28px; color: var(--soova-blue);">SOOVA</h2>
+        <div style="text-align:center; flex-grow: 1;">
+            <h2 style="margin:0; font-size: 28px;">SOOVA</h2>
             <small style="color:var(--soova-green); font-weight:bold;">Empowering Communities</small>
         </div>
     </div>
-
-    <div class="content">
-        <div class="gear-icon">⚙️</div>
-        <h1>Maintenance Under Progress</h1>
-        <p>Our portal is currently undergoing scheduled system maintenance to serve you better. We will be back online on <b>August 14, 2026, at 12:00 PM IST</b>.</p>
-
-        <!-- Countdown Timer -->
-        <div class="timer-container">
-            <div class="timer-box">
-                <div class="timer-number" id="hours">00</div>
-                <div class="timer-label">Hours</div>
+    <div class="form-content">
+        <h2>User Profile Collection Portal</h2>
+        <form id="profileForm">
+            
+            <div class="section">
+                <div class="section-title">1. Collection Info</div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Date and Time (Auto)</label>
+                        <input type="text" id="field1" readonly placeholder="Will be captured on save">
+                    </div>
+                    <div class="form-group"><label>Collector Name</label><input type="text" id="field2"></div>
+                    <div class="form-group">
+                        <label>Mode of Collection</label>
+                        <select id="field3">
+                            <option value="Physical">Physical</option>
+                            <option value="Telephonic">Telephonic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label>Partner Network / Private Group</label><input type="text" id="field4" value="SOOVA" readonly></div>
             </div>
-            <div class="timer-box">
-                <div class="timer-number" id="minutes">00</div>
-                <div class="timer-label">Minutes</div>
+
+            <div class="section">
+                <div class="section-title">2. Beneficiary Profile</div>
+                <div class="form-group"><label>Name of the Beneficiary</label><input type="text" id="field5" required></div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="field6"><option>Male</option><option>Female</option><option>Other</option></select>
+                    </div>
+                    <div class="form-group"><label>Year of Birth</label><input type="number" id="field7" placeholder="YYYY"></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Educational Qualification</label>
+                        <select id="field8">
+                            <option value="Illiterate">Illiterate</option>
+                            <option value="Under Matric">Under Matric</option>
+                            <option value="Matric">Matric</option>
+                            <option value="Under Graduate">Under Graduate</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Post Graduate">Post Graduate</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Mobile (10 Digits)</label><input type="tel" id="field9" placeholder="e.g. 9876543210"></div>
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp Linked?</label>
+                    <select id="field10"><option>Yes</option><option>No</option></select>
+                </div>
             </div>
-            <div class="timer-box">
-                <div class="timer-number" id="seconds">00</div>
-                <div class="timer-label">Seconds</div>
+
+            <div class="section">
+                <div class="section-title">3. Location Details</div>
+                <div class="grid">
+                    <div class="form-group"><label>State</label><input type="text" id="field11" value="Odisha" readonly></div>
+                    <div class="form-group"><label>District</label><input type="text" id="field12" value="Mayurbhanj" readonly></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Block</label>
+                        <select id="field13" onchange="updateVillages()">
+                            <option value="Udala">Udala</option>
+                            <option value="Kaptipada">Kaptipada</option>
+                            <option value="Samakhunta">Samakhunta</option>
+                            <option value="Saraskana">Saraskana</option>
+                            <option value="Bangiriposi">Bangiriposi</option>
+                            <option value="Jashipur">Jashipur</option>
+                            <option value="Kuliana">Kuliana</option>
+                            <option value="Suliapada">Suliapada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Revenue Village 🔍 (Type to Search)</label>
+                        <div id="villageContainer">
+                            <input type="text" id="field14" list="villageList" placeholder="Type or select village name...">
+                            <datalist id="villageList"></datalist>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"><label>Sub Village / Hamlet</label><input type="text" id="field15"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">4. Occupation & Land</div>
+                <div class="form-group">
+                    <label>Occupation Category</label>
+                    <select id="field16">
+                        <option value="Farmer">Farmer</option>
+                        <option value="Only Crop Farmer">Only Crop Farmer</option>
+                        <option value="Labor">Labor</option>
+                        <option value="Livestock Rearing">Livestock Rearing</option>
+                        <option value="Goverment Job">Goverment Job</option>
+                        <option value="Private Job">Private Job</option>
+                        <option value="Seasonal Migration">Seasonal Migration</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Profile Type</label>
+                    <select id="field17"><option>New User Profile</option><option>Update User Profile</option></select>
+                </div>
+                <div class="form-group"><label>Total Land Holding (Acre)</label><input type="number" step="0.01" id="field18" value="0"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">5. Crop Details</div>
+                <div class="grid">
+                    <div><label>Crop 1</label><input type="text" id="field19" value="Paddy" readonly></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field20" class="land-input" value="0" data-crop="Paddy"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 2</label><input type="text" id="field21" value="Groundnut" readonly></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field22" class="land-input" value="0" data-crop="Groundnut"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 3</label><input type="text" id="field23" value="Greengram" readonly></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field24" class="land-input" value="0" data-crop="Greengram"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 4</label><input type="text" id="field25" value="Oil Seeds" readonly></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field26" class="land-input" value="0" data-crop="Oil Seeds"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Crop 5</label><input type="text" id="field27" value="Vegetables" readonly></div>
+                    <div><label>Land (Acre)</label><input type="number" step="0.01" id="field28" class="land-input" value="0" data-crop="Vegetables"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">6. Livestock</div>
+                <div class="grid">
+                    <div><label>No of Goats</label><input type="number" id="field29"></div>
+                    <div><label>No of Poultry</label><input type="number" id="field30"></div>
+                    <div><label>No of Cows</label><input type="number" id="field31"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 1</label><input type="text" id="field32"></div>
+                    <div><label>Nos</label><input type="number" id="field33"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 2</label><input type="text" id="field34"></div>
+                    <div><label>Nos</label><input type="number" id="field35"></div>
+                </div>
+                <div class="grid">
+                    <div><label>Other Animal 3</label><input type="text" id="field36"></div>
+                    <div><label>Nos</label><input type="number" id="field37"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">7. Other Activities</div>
+                <div class="grid">
+                    <div class="form-group"><label>Milk Societies?</label><select id="field38"><option>No</option><option>Yes</option></select></div>
+                    <div class="form-group"><label>Poultry Farming?</label><select id="field39"><option>No</option><option>Yes</option></select></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group"><label>Craft Owner</label><input type="text" id="field40"></div>
+                    <div class="form-group"><label>Type of Craft</label><input type="text" id="field41"></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group"><label>Type of Gear/Net</label><input type="text" id="field42"></div>
+                    <div class="form-group"><label>Fish Landing Centre</label><input type="text" id="field43"></div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn save-btn" onclick="saveData()">💾 Save Entry</button>
+                <button type="button" class="btn download-btn" onclick="downloadCSV()">📥 Download All Data (Excel CSV)</button>
+            </div>
+            <div id="status"></div>
+        </form>
+
+        <!-- SECURE GLOBAL ADMINISTRATION BLOCK -->
+        <hr style="margin: 40px 0; border: 0; border-top: 2px dashed #ccc;">
+        
+        <div class="section admin-section">
+            <div class="section-title admin-title">🔒 Administration & Global Access Tracking</div>
+            <p style="font-size: 13px; color: #555;">Restricted access area. Shows visitors opening this link from any mobile device globally.</p>
+            
+            <div id="adminLoginArea" class="grid" style="grid-template-columns: 2fr 1fr;">
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password" autocomplete="off" spellcheck="false">
+                <button type="button" class="btn admin-btn" onclick="loginAdmin()">Unlock Admin</button>
+            </div>
+
+            <div id="adminPanel" style="display: none; margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4 style="margin: 0;">📱 Global Access Logs (All Devices & Mobiles)</h4>
+                    <button class="sm-btn" onclick="loadAdminData()" style="background:#1a73e8;">🔄 Refresh Logs</button>
+                </div>
+                <p style="font-size: 12px; color: #666;">Shows every device/mobile opening this page worldwide with real-time location and OS details.</p>
+                <button class="sm-btn" onclick="clearAccessLogs()" style="background:#d93025;">Clear Access Logs</button>
+                
+                <div class="table-responsive">
+                    <table id="accessLogTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date & Time</th>
+                                <th>Device Name / Brand</th>
+                                <th>Android / OS Version</th>
+                                <th>Location Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin-top: 25px; margin-bottom: 5px;">📊 Saved Beneficiary Submissions</h4>
+                <button class="sm-btn" onclick="downloadCSV()">Export CSV Data</button>
+                <button class="sm-btn" onclick="clearSurveyDB()" style="background:#d93025;">Clear All Survey Records</button>
+
+                <div class="table-responsive">
+                    <table id="surveyRecordsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Beneficiary Name</th>
+                                <th>Mobile Number</th>
+                                <th>Block</th>
+                                <th>Village</th>
+                                <th>Collector</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
     <footer>
         Made with ❤️ by <b>Vivek Aryan Pati</b><br>
         Copyright © <b>SOOVA 2026</b>
@@ -172,37 +319,511 @@
 </div>
 
 <script>
-    // Target completion time strictly locked to IST (Indian Standard Time UTC+5:30)
-    const targetDate = new Date("2026-08-14T12:00:00+05:30").getTime();
+    const HEADERS = [
+        "Date and Time", "Collector Name", "Mode of Collection", "Partner Network", 
+        "Beneficiary Name", "Gender", "Year of Birth", "Educational Qualification", "Mobile", "WhatsApp Linked", 
+        "State", "District", "Block", "Revenue Village", "Sub Village", 
+        "Occupation Category", "Profile Type", "Total Land", 
+        "Crop 1", "Land 1", "Crop 2", "Land 2", "Crop 3", "Land 3", "Crop 4", "Land 4", "Crop 5", "Land 5",
+        "No of Goats", "No of Poultry", "No of Cows", 
+        "Other Animal 1", "Nos 1", "Other Animal 2", "Nos 2", "Other Animal 3", "Nos 3",
+        "Milk Societies", "Poultry Farming", "Craft Owner", "Type of Craft", "Gear/Net", "Fish Landing Centre"
+    ];
 
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const difference = targetDate - now;
+    const VILLAGES_DATA = {
+        "Udala": [
+            "Upartaldiha", "Kundabai", "Jamudiha", "Tentala", "Khaladi", "Ambikadeipur", "Adipur", "Patasanipur",
+            "Chandrapur", "Brahmapur", "Sridamchandrapur", "Chadada", "Khadikasol", "Nuagaon", "Gobindapur",
+            "Balichhatara", "Angarpada", "Nayarangamatia", "Balabhadrapur", "Manikpur", "Anantapur", "Badakhaman",
+            "Salmundali", "Kotilinga", "Kathuabeda", "Sonapokhari", "Sialia", "Sansingaria", "Pagodadar",
+            "Badsingaria", "Musakhai", "Adapal", "Patapur", "Ambadiha", "Dugudha", "Bahubandha", "kanakpada",
+            "Nabara", "Jalda", "Urmal", "Dibyasinghapur", "Bhurudubani", "Purunapani", "Athangan",
+            "Bhimatalisasan", "Bhimatali", "Kainthaora", "Nuasahi", "Khuntapal", "Uttarpal", "Raidandia",
+            "Dutikadeipur", "Chhotraipur", "Beguniadiha", "Rangamatia", "Chuliaposi", "Jualia", "Naharapada",
+            "Nizkainsari", "Kirikichia", "Kalapahad", "kathapal", "Naraharipur", "Teldihudi", "Siripur",
+            "Hillblock No-26", "Prafullachandrapur", "Sarasbila", "Manidi", "Jadukhunta", "Dimogadia",
+            "Kochiladiha", "Bairatpur", "Dhulinda", "Bhanjbasa", "Ghagra", "Kuanrpal", "Matihudi", "Damasahi",
+            "Hatasahi", "Rajabasa", "Ramchandrapur", "Hill block No-89", "Mauda", "Dihirakul", "Radho", "Hill Block No-28"
+        ],
+        "Samakhunta": [
+            "Champagarh", "Jogendradasjot", "Lulung", "Krushnachandrapur", "Govindchandrapur", "Pithabata", "Purunapani",
+            "Kochilaghaty", "Tarajodi", "Laxmiposi", "Bhundapal", "Nuagan", "Khasadiha", "Godipokhari", "Jungle Block",
+            "Enayatpur", "Duldaradhanagar", "Kendujhari", "Besarpani", "Saratchandrapur", "Sansul", "Kakarpani",
+            "Sapanchua", "Salbani", "Kundalbani", "Rangamatia", "Badsol", "Chahatia Basang Bani", "Dudhiasol",
+            "Samaidihi", "Harisul", "Kendua", "Nantasahi", "Rangibhol", "Mahulkarkachia", "Gundihudi", "Chandanpur",
+            "Ambasikida", "Balimunduli", "Jaybilla", "Jagannathpur", "Sindurgoura", "Mankdapal", "Gayalmara",
+            "Golagadia", "Telibila", "Shamakhunta", "Sibajambani", "Kadalibadia", "Dhanpur", "Sirisbani", "Sudiam",
+            "Dangarsahi", "Baunsabila", "Sundardihi", "Harishchandrapur", "Karanjia", "Bahadurpur", "Tikarpada",
+            "Ektali", "Malhua", "Gauddihi", "Jhinkpal", "Pundra", "Paikabasa", "Hatimara", "Satpautia", "Bajratundi",
+            "Itamundia", "Jatipur", "Mahulia", "Kuluchibani", "Arakhpal", "Dumukapal", "Chipatastia", "Kanjibhati",
+            "Durgapur", "Konapal", "Jambani", "Gomundi", "Laxmipur", "Bhalubasa", "Jhilribani", "Haldibani",
+            "Mudrajodi", "Alubani", "Kitadihi", "Chadkata", "Kalapathar", "Akarsila", "Ghansaria", "Chanabadia",
+            "Bishnupal", "Manika", "Jhakamaki", "Vegibania", "Khalapada", "Badpanipal", "Teldiha", "Bhomanal",
+            "Karkachia", "Kendudiha", "GaudRumacolonysahi", "Chahalapada", "Jhinkria", "Chulapal", "Kantapal",
+            "Sankuldiha", "Malgambharia", "Garupal", "Fuljharasamilfatudiha", "Jamsul", "Bhaluki", "Asanbani",
+            "Hinjalgadia", "Jhinei", "Balidiha", "Ambadali", "matiali", "Jualiruma", "Khandia", "Danamara",
+            "Badkuldiha", "Bholagadia", "Kisandahi", "Badkuchiamara", "Tolakpokhari", "Sankochiamara", "Janudahi",
+            "Inkidapal", "Sankhdar", "Bangai", "Ambaduvi", "Baunsanali", "Khuntapal", "Sanpanipal"
+        ],
+        "Kuliana": [
+            "Raghunathganj", "Bhutiapada", "Rangiam", "Kudiapal", "Rangamatia", "Adapal", "Nalhua", "Ambua",
+            "Koilisuta", "Sanbadtalia", "Kanjia", "Ambapunja", "Khairbani", "Mundhakata", "Madanasahi", "Purunapani",
+            "Tilagadia", "Tolakchuin", "Nabedi", "Tikayatpur", "Bangan", "Pariakuli", "Tamkiasul", "Balimunduli",
+            "Koliana", "Kamta", "Titiri", "Pratappur", "Sukhuapara", "Sarpankha", "Patihinja", "Binjhabani",
+            "Kathruma", "Srichandanpur", "Barudihi", "Baidikotha", "Jhilidam", "Mundhabani", "Jagannathpur",
+            "Gendapokhari", "Patharghera", "Gidhibas", "Bhaduanuagan", "Bhaduabeda", "Tiringidihi", "Dantamusal",
+            "Sanhaladiakandmachha", "Saragchhida", "Badnuagan", "Santangasul", "Sanbhaliadiha", "Badbhaliadiha",
+            "Bhagabanpur", "Machhakandana", "Sauri", "Panijia", "Balarampur", "Haldia", "Dumurdiha", "Jampada",
+            "Kusatalia", "Baiganbadia", "Andhari", "Asanjoda", "Athagandi", "kathsirsi", "Chandabilla", "Sarasbondha",
+            "Sanadarunia", "Talabadia", "Paikalidarunia", "Sagunapada", "Jambhirei", "Dubabania", "Athakahania",
+            "Dangarsahi", "Jamda", "Patiasimili", "Bhaunria", "Digariastia", "Kuliapal", "Budhidahan", "haripalei",
+            "Kanialoka", "Khukundia", "Gaudroma", "Anlabani", "Chirgunia", "Kamarpal", "Pokharia", "Baliadahan",
+            "Kathpal", "Sanpalasia", "Gobindapur", "Paikalisardiha", "Majhibhag", "Parulia", "Salbani", "Mangarajia",
+            "Adasilibadhali", "Badhaladiakanda", "Darunia", "Jogadiha", "Panasbeda", "Jogadihasamil jhatikaram",
+            "Kakrisul", "Ghodapal", "Chaulagheri", "Pachapani", "Arjunia", "Jambhiripal", "Kukudakhumpi", "Bholgadia",
+            "Dimpal", "Angargadia", "Chelinendi", "Kuchei", "Bankiasul", "Balipal", "Daha Munda", "Dhanukdiha",
+            "Palasbani", "Badjunbani", "Jasaibad", "Baunskantia", "Saradiha", "Santisole", "Darkholi", "Jhagadidimpal",
+            "Padhiaripur", "Panatapal", "Barkuli", "Sunthipal", "Kaniabuda", "Kusumdiha", "Suniapal", "Kadamgadia",
+            "Tumuda", "Gaighati", "Manasmundia", "Aniapal", "Khadibani", "Duvia", "Salugadia", "ASanJoda", "Gangraj",
+            "Sanjunbani", "Kanhupur", "Kamardiha", "Dahigan", "Kuadim", "Ambadiha", "Jungle Block", "Kanchipal",
+            "Hadhadibangan", "Nadhna", "Jamjarki", "Kathgandia", "Kakharusole", "Nuhamalia", "Baragenja", "Dudhakundi",
+            "Hatibari", "Bankaanla", "Bhugudakata", "Nagrasol", "Ghuntabani", "Balichaturi", "Saluabeda", "Banadav",
+            "Sunaria", "Chandua", "Tulasibani", "Kaladam", "Jamsul", "Bhurungasol", "Badasarasposi", "Satpautia",
+            "Nayadudhiasole", "Kesharpur", "Sansarasposi", "Chhelikani", "Madhapur", "Kothabilla", "Dudhiasul",
+            "Badtilau", "Gayalkata", "Baunsabani", "Bholabeda", "Godargodi", "Charmania", "Badbadtalia", "Baghuasul",
+            "Tubulbhadu", "Tangasole", "Chalunia", "Chahalapada", "Rathasol", "Baliatilau", "Kalikasole", "Baidpur",
+            "Karkachia", "Pandasole", "Sunaposi", "Ramkadali", "Badpalasia", "Tadaki", "Keutunimari", "Rangisole",
+            "Dardara", "Rangibeda", "Hatimada", "Nodhabani", "Sannuagan", "Kuabuda", "Dardiasole", "Fuljhara",
+            "Betnota", "Dhadipada", "Gadubhanga", "Jhinei", "Raghunathpur", "Bhuyangoda", "Marangtandi", "Jiani",
+            "Jhanjdapal", "Mankadkenda", "Kalajhinei", "Dublabeda", "Bhagabandha"
+        ],
+        "Bangiriposi": [
+            "Nitai", "Mundhakata", "Dighi", "Talatikiri", "Darakantia", "Jogibandh", "Ramchandrapur", "Nuagan",
+            "Khadipahadi", "Bedhakudar", "Kadamdiha", "Aktapal", "Kansapal", "Bahadurpur", "Chandanpur", "Dumuria",
+            "Laxmiposi", "Asna", "Gosanipal", "Kamalpur", "Punasia", "Bhalupahadi (Hill block)", "Manda", "Baunsabudi",
+            "Kasiabeda", "Sikarbhanga", "Mahulbarei", "Bangriposi", "Baghiabeda", "Sanpatharakham", "Badpatharakham",
+            "Majhigan", "Silpunji", "Jamadapal", "Kantapal", "Sarasposi", "Handa", "Mahuli", "Banakati", "Satbhaya",
+            "Dahisahi", "Sagunasul", "Malidihi", "Simila", "Golamundhakata", "Uania", "Jhinkpahadi", "Kanimahuli",
+            "Nafri", "Chaulgheri", "Kalliami", "Saripada", "Chuapani", "Dasisul", "Nayadasisul", "Sirasahi",
+            "Nischinta", "Sundhisahi", "Gohirapal", "Bholagadia", "Pindargadia", "Basukitala", "Bhagirathipur",
+            "Chandbil", "kamalpur", "Kusumbandha", "Basantpur", "Hijili", "Sasadapal", "Asanbani", "Kadadiha",
+            "Jhilidam", "Jualikata", "Randasahi", "Shyamsundarpur", "Bhulanpur", "Sialjodi", "Anlagunja",
+            "Talabharadasol", "Patbeda", "Ranasul", "Gandipani", "Diabaghia", "Naikali", "Andola", "Nakhura",
+            "Mahilalpur", "Deolipal", "Salabani", "Sitaldhar", "Beguniadiha", "Nayabasan", "Khairabani", "Pathuri",
+            "Mahiralpur", "Bhadiari", "Balipalmundhakata", "Asana", "Damsole", "Mahulisul", "Dhadangri", "Unchadiha",
+            "Udali", "Saragchhida", "Budamara", "Kumbharmundha", "Gauddiha", "Mundhabani", "Gamhapur", "Bhaliadahar",
+            "Jaganathkhunta", "Kandalia", "Kendudiha", "Sandim", "Kalabadia", "Brahmangan", "Panisiali",
+            "Balimundali", "Jagannathpur", "Panasdiha", "Manoharpur", "Karanjiapal", "Taradapal", "Khandipal",
+            "Sunamuhin", "Juna", "Dhobanisul", "Godargadi", "Champabeda", "Taltikiri", "Mahupahadi", "Balikhani",
+            "Hillblock-II", "kandalia", "Chadheipahadi", "Uperbharadasul", "Matikhani", "Jamugadia", "Kanjiasol",
+            "Anlajodi", "Pandrabandha", "Gopalpur", "Kurukutia", "Asansikar", "Rangamatia", "Kanchhinda", "Palasbani",
+            "Sannedam", "Badnedam", "Astabeda", "Bautia", "Ghatiduba", "Betjharan", "Kumbhirmundi", "Hatibari",
+            "Sarbania", "Sorisapal", "Baunsapahadi", "Dumuhani", "Ghatkuanri", "Mohanpur", "Beguniabandh",
+            "Baliadhipa", "Talbandh", "Mankadkenda", "Kairakacha", "Karkachia", "Rengalbeda", "Salghati",
+            "Dhadipani", "Dantiakacha", "Charabandh", "Kusumtota", "Chakidi", "Purunapani", "Kukurbhuka",
+            "Khadighati", "Jamtalia", "Basilakacha", "Amdapani", "Alapani", "Jerkani", "Baribeda", "Fuljhara",
+            "Bhaduakacha", "Khadkei", "Rajabasa", "Masinabila", "Jaladiha", "Sadheikala", "Gothanida", "Badamtalia",
+            "Joka", "Labania", "Budhikhamari", "Khadikasol", "Tangiabasa", "Hillblock", "Dhobanijoda", "Purusotampur",
+            "Bhuasuni", "Pandubadi", "Rayan", "Chakdar", "Kripaduma", "Sunaposi", "Badgan", "Juha", "Kundalbani",
+            "Kantasala", "Gendapokhari", "Tila", "Kalapathar", "Ramharipur"
+        ],
+        "Saraskana": [
+            "Hill block-1", "Bhadua", "Jamgandia", "Paktia", "Barubeda", "Puapoka", "Jamkunda", "Ichinda", "Dighi",
+            "Fuljharan", "Ghuma", "Kulapathar", "Kukudaanda", "Tilow", "Sankhabhanga", "Hill -2", "Jodajam", "Kasiabeda",
+            "Hill Block", "Pimpudijharan", "Kasidihi", "Mahespur", "Pokharidiha", "Kalapani", "Balidiha", "Dumurdiha",
+            "Murgadihi", "Pokharia", "Kapadiha", "Digarisol", "Baliajoka", "Bhadua Samil Bachhuribandh", "Ambadiha",
+            "Joka", "Uperbeda", "Danadar", "Silphodi", "Khairabani", "Palasbani", "Darkholi", "Saragchainda",
+            "Manaharpur", "Kherna", "Malkunda", "Jerkani", "Bankisul", "Karunasul", "Dakhinsul", "Kundiapani",
+            "Bagbuda", "Gobindapur", "Nota", "Nuhamalia", "Sunamuhin", "Katisole", "Saraskana", "Mundhakata",
+            "Nuagan", "Panijia", "Gopinathpur", "Pahadpur", "Baghajhampa", "Panisul", "Umadeipur", "Nadiathul",
+            "Kendumundi", "Kanimahuli", "Manabhanj", "Kendua", "Nedabhadi", "Gohalamunda", "Hatibari", "Sansanadi",
+            "Mahantipalasia", "Podasia", "Ekdali", "Panasdiha", "Dhendgan", "Chandabilla", "Chhuadim", "Sankundalbani",
+            "Kasipal", "Brusabhanupur", "Badkundalbani", "Chakadaha", "Unchagan", "Pandabilla", "Tentuli", "Kumbhari",
+            "Mundhabani", "Machhakandana", "Barunabeda", "Janakideipur", "Murunia", "Gonali", "Jogitofa", "Mahulbarei",
+            "Brundabanpur", "Kisanpur", "Balijodi", "Kumbharduvichhak", "Dakhinbadi", "Ghantiabuda", "Jharia",
+            "Bhandarikula", "Balabhadrapur", "Palasia", "Puani", "Jaunti", "Kandalia", "Saragada", "Belbaria",
+            "Krushnachandrapur", "Anlatoda", "Mohanala", "Rautara", "Thakuranisul", "Rajaloka", "Rasika", "Salbani",
+            "Ghiajodi", "Dhangheri", "Chaulgeri", "Bandhiari", "Badchatra", "Hijli", "Kumbharduvi", "Gandipani",
+            "Nabinmundhakata", "Mundali", "Panchamtalia", "Kuldiha", "Bangan", "Banaratila", "Bedhapal", "Badaratila",
+            "Mahukula", "Neda", "Nuagan Sirsa", "Birsinga", "Kachimbila", "Sankadpatia", "Badkadpatia", "Manjari",
+            "kachimbilla", "Kesuriasol", "Tulsibani", "Budamara", "Andhari", "Jharpokharia", "Jhadbeda", "Arjundiha",
+            "Sankucha", "Dhangidisol", "Asanasol", "Ramchandrapur", "Badsol", "Khadiasol", "kantasola", "Raibani",
+            "Punasia", "Jalda", "Paniposi", "Padmapur", "Majhigan", "Deuli", "Gadadharpur", "Baunsda", "Astia",
+            "Darghai", "Sirsa", "Nuadihi", "Jamunapal", "Kumbhirmundi", "Pandra", "Dumuria", "Jamdhurudi", "Jambani",
+            "Pathuri", "Tolaka", "Rajabandh", "Sijua", "Patpacha", "Barati", "Badpal", "Kuanrdihi", "Nagadihi",
+            "Purunapani", "Nuagansahar", "Bhursani", "Nuhamaliasahar", "Jerki"
+        ],
+        "Suliapada": [
+            "Kusumasole", "Chaksuliapada", "Podadiha", "Nadigan", "Jhaliamara", "Bangriposi", "Taldiha", "Rangamatia",
+            "Dhemnasol", "Dhobanisul", "Anlakuda", "Pathara", "Belerisol", "Nedhua", "Kamarpal", "Khaikhia",
+            "Adiamara", "Nagsol", "Andarjoda", "Nabedhi", "Tamudiasul", "Khandarpada", "Bijaykrushnachandrapur",
+            "Gundurilocha", "Pushigan", "Deuli", "Dhanimari", "Badasol", "Sirispada", "Khadiasul", "Sindurgoura",
+            "Masinakathi", "Sampura", "Sanjogibandh", "Pathuri", "Sarasposi", "Podugirisole", "Tolakchuin", "Baghbani",
+            "Bedhi", "Kadapatia", "Budamara", "Junbani", "Nuagan", "Badjogibandh", "Bholghaty", "Jamsola",
+            "Handibhanga", "Chuhat", "Chinaposi", "Badnachna", "Sannachna", "Kathsirisi", "Bhola", "Dakhaman",
+            "Pala", "Tadki", "Dhansul", "Nodhakundia", "Ghanaghana", "Bankati", "Telia", "Talakpal", "Kadokotha",
+            "Dumuria", "Gangasul", "Dhabani", "Singda", "Dhobanisole", "Chandabilla", "Gandhasali", "Sansasole",
+            "Bhandarisul", "Kantisahi", "Badsole", "Patharnesa", "Karatanala", "Pokharia", "Tilajudia", "Kathagohala",
+            "Baikunthapur", "Jamubadi", "Saluadahar", "Patarnesa", "Kundiasul", "Jalghati", "Dhadangiri", "Purunapani",
+            "Bhaduasul", "Fania", "Majhianitofa", "Gauduniduva", "Manda", "Tentaposi", "Andharisole", "Tilaposi",
+            "Chakadar", "Chakchakia", "Badraghunathpur", "Pandusole", "Mahabila", "Bilash", "Bhuskunda", "Lankadiha",
+            "Bari", "Kusumi", "Suliapada", "Bhaliasul", "Kankini", "Ufalgadia", "Kalajhari", "Guhaldiha", "Palasdiha",
+            "Badbangan", "Sankhuntapal", "Murgapahadi", "Dimian", "Darudihi", "Kaptisul", "Jhatiadasamilnuapada",
+            "Baghda", "Mahulkundia", "Rakhanisul", "Sanbhadua", "Salbani", "Badsul", "Chauldahani", "Balisulia",
+            "Kherna", "Chianapada", "Sanbhalia", "Dhatika", "Kaltiasamilkadakusmi", "Badbhalia", "Hatimada", "Kiajhari",
+            "Naupada", "Kuladahani", "Bautisul", "Singimara", "Badtungadhua", "Santungdhua", "Nedasul", "Paktia",
+            "Keutunimari", "Dharampura", "Chakapur", "Kathsirsi", "Mahuliasamilpaninagar", "Jurka", "Gendakhal",
+            "Badbaincha", "Mundhakata", "Rasunia", "Damburudiha", "Salasahi", "Baddhenkia", "Sandhenkia", "Bangan",
+            "Jambhirapal", "Khadiasole", "Rainda", "Kunchisole", "Pandupal", "Kanimahuli", "Kadakotha", "Beguniadiha",
+            "Julka", "Badputuka", "Sanputuka", "Kujidihi", "Badasole", "Asanbani", "Dudhiasole", "Badsukhilakhal",
+            "Gopiabandh", "Chitakhala", "Kaliasole", "Kostha", "Badada", "Bichakania", "Kotharikata", "Dhenkinanjia",
+            "Nunia", "Kamarjanta", "Saradiha", "Kukudajodi"
+        ],
+        "Kaptipada": [
+            "Khadimadaranga", "Hill Block No-160", "Hill Block No-0161", "Sanjunpal", "Hillblock No-151",
+            "Nuhamalia", "Badajunpal", "Kantiali", "Nachhipur", "Kadamsul", "Gandidar", "Koliolalsamil Pagadadiha",
+            "Bhandaripal", "Podadiha", "Talapadiasamiljiatikar", "Hill block No-171", "Jayantipatta Samil Jamudiha",
+            "Chakradharpur", "Sadanandapur", "Sarbanaghaty", "Potaldiha", "Kukurdima", "Gothapura", "Gheepura",
+            "Astapura", "Tampada", "Nuagan", "Talia", "Narasingbeda", "Sarbanaghaty Hill block No-172",
+            "Hill block No-173", "Kantagadi", "Nuasahi", "Debala", "Chhanua", "Phulbadia", "Chuinposi", "Gadiapal",
+            "Asanbani", "Pingu", "Kathapal", "Nodhadiha", "Karapada", "Gohira", "Kuagathana", "Gaudgan", "Sankhaladi",
+            "Badakhaladi", "Baghamara", "Sindhupur", "Baulakhaladi", "Durgapur", "Dunduria", "Bandhamal",
+            "Sansimilia", "Baniagan", "Machhia", "Saubhagyadeipur", "Jhinkapada", "Pedagadi", "Ghuntabani",
+            "Mahulbani", "Khetpada", "Patpur", "Jarada", "Rathipur", "Janakpur", "Kaptipada", "Mahuldiha", "Beldiha",
+            "Mirigothana", "Sudsudia", "Ambapichhula", "Badampada", "Khuntabil", "Jamubani", "Dhumkhet", "Palasabani",
+            "Kuanrpur", "Bhagabondh", "Bhalubasa", "Sanbisol", "Sagunabasa", "Golagodia", "Baghabasa", "Talbani",
+            "Badbisol", "Sangudugudia", "Badgudugudia", "Badbadi", "Singidida", "Benipur", "Hill Block No-31",
+            "Kaladahi", "Khadikhania", "Noto", "Kadabahali", "Sarat", "Gourchandrapur", "Dillisahar", "Bisungaon",
+            "Labanyadeipur", "Katuria", "Sanadei", "Gaipanikhiahill", "Dewanbahali", "Bidyadharanagar", "Salachua",
+            "Jadida", "Talapokhari", "Nedam", "Raikala", "Phulbadia Hill Block", "Kusunpur", "Sundhal", "Mahisasuri",
+            "Jayaguntia", "Thakurasahi", "Bhaluhuruda", "Badasimilia", "Sologodia", "Gendagadia", "Gayalmara",
+            "Parasabadi", "Mankadpada Hill", "Majhigadia", "Raidiha", "Baladamara", "Dangarsahi", "Raikalachua",
+            "Mahulpankha", "Dhapada", "Siriapal", "Rajatnagar", "Ranipokhari", "Prasanachandrapur", "Kumudabadi",
+            "Baghadafa", "Sukhuapata", "Saradiha", "Sripadamanjaripur", "Bhandar", "Gokulpur", "Kalamgadia",
+            "Prafullachandrapur", "Dugudha", "Sukhuapata Hill", "kathachua", "Balichua", "Ramchandrapur", "Dolipada",
+            "Tolagadia", "Padmapokhari"
+        ],
+        "Jashipur": [
+            "Tangurusahi", "Ramasahi", "Genteisahi", "Mandam", "Mandamhill", "Dhulia", "Hill Block (Chhemundia)",
+            "Chhamudia", "Gandirabeda", "Baliaban", "Ashokihill", "Ashoki", "Hill BlockNo-II", "Asura", "Dalkibeda",
+            "Naubudani", "Siltia", "Sinduria", "Banpandugandi", "Ramachandrapur", "Nuhamalia", "Ambatalia", "Chakidi",
+            "Badamaranda", "Sanmaranda", "Badaduma", "Rahanda", "Kalasbandha", "Bhanda", "Jamukeswar", "Digposi",
+            "Champabalda", "Tangarbalda", "Badapahad", "Baunsanali", "Pahadpur", "Budhipathill", "Naana", "Manada",
+            "Baria", "Dhatikia", "Bandiraposi", "Balijodi", "Kumbharpandugandi", "Kendumundi", "Telipalasa",
+            "Jodidiha", "Tuntuna", "Mahardapalasa", "Badjunaposi", "Kumbharkhatia", "Balisodra", "Dakarabeda",
+            "Laxmiposi", "Maharajpur", "Ambadiha", "Machhakandana", "Maharajpurhill", "Bargiput", "Begunia",
+            "Chheligodhuli", "Badsialinai", "Daldali", "chahala", "Brundaban", "Haladia", "Sansialinai", "Tulasibani",
+            "Durdura", "Handipuhan", "Kadalibadihill", "Padmapur", "Chandposi", "Jamda", "Bhandariposi", "Bharadaposi",
+            "Bhupad", "Goudgan", "Mundhakata", "Jokjhari", "Kuljodi", "Kanjipia", "Basantapur", "Gokarnabindha",
+            "Anlabeni", "sundhibhila", "Madarangajodi", "Kadapandugandi", "Kajala", "Deola", "Khaladi", "Maudi",
+            "Itamundi", "Sanjunaposi", "Bedhakudar", "Biunria", "Tikarpada", "Aktapal", "Palasagadia", "Kadadiha",
+            "Kudarbisida", "Nebda", "Anukulpur", "Kankadani", "Badsole", "Kaptira", "Kasipal", "Suanpal", "Dhalabani",
+            "Chadripahadi", "Podagarh", "Badajhilli", "Madanmohanpur", "Brundeiposi", "Tingiriani", "Palgoda",
+            "Kundagad", "Bhadusole", "Jamuani", "Sanjhilli", "Hatimundi", "Rajpal", "Asanabani", "Kolajhari",
+            "Chakundakacha", "Bareipani", "Barsia", "Nuniagoda", "Sanasoki", "Badasoki", "Rautala", "Kalikaprasad",
+            "Thakurgoda", "Sapachira", "Baranga", "Kapanda", "Chakasuanpal", "Matiagarh", "Goili", "Singarpur",
+            "Pandugandi", "Angarpada", "Badbil", "Chainebda", "Sunamuhin", "K.handabandha", "Rugudi", "Chaturisahi",
+            "Kaluakhaman", "Siramanipur", "Jaunriposi", "Badbadaposi", "Badanai", "Dhemananali", "Kenjhrapanposi",
+            "Kenjhara", "Sannai", "Kointa", "Bakartala", "Pantho", "Mashinabhila", "Banakati", "Tangabhilla",
+            "Bakala", "Dhuduku", "Ekatali", "Nangalsila", "Kaleitumba", "Baragadia", "Kiajhari", "Kanchikina",
+            "Kumudabadi", "Ghaniaposi", "Tilabadi", "Kaliani", "Olkudar", "Uttaransa", "Tamakasili", "Bilapaka",
+            "Kolha", "Bandirabasa", "Fulabadia", "Jajadihi", "Atharadeula", "Netraghosra", "Gudgudia", "Chandikhaman",
+            "Kumari", "Saharpat", "Khediadunguri", "Kusumi", "Sankasira", "Barigan", "Badakasira", "Kundabil",
+            "Bhradachua", "Kabatghai", "Khejuria", "Kuanribil", "Lembujharan", "Bakua", "Jamunagarh", "Jenabil",
+            "Gurandia", "Budhabalanga", "Saruda", "Similipal", "Astakuanr", "Balarampur", "Jurunda", "Kukurbhuka",
+            "Nikhirda", "Hillblock", "Panchudahan", "Balikhal", "Makabadi", "Badmakabadi", "Gopinathpur", "Dhuduruchampa"
+        ]
+    };
 
-        if (difference <= 0) {
-            document.getElementById("hours").innerText = "00";
-            document.getElementById("minutes").innerText = "00";
-            document.getElementById("seconds").innerText = "00";
-            clearInterval(timerInterval);
+    // CENTRAL FREE CLOUD LOGGING CONFIGURATION (JSONBin API)
+    const CLOUD_BIN_ID = "66a36f94e41b4d34e4168a3f"; 
+    const CLOUD_API_URL = "https://api.jsonbin.io/v3/b/66a36f94e41b4d34e4168a3f";
+
+    function initForm() {
+        trackLinkAccess();
+        updateVillages();
+        updateButtonCount();
+    }
+
+    // AUTOMATIC GLOBAL LINK ACCESS, DEVICE, ANDROID & LOCATION TRACKER
+    function trackLinkAccess() {
+        const ua = navigator.userAgent;
+        let deviceBrand = "Unknown Device";
+        let osVersion = "Unknown OS";
+
+        // Detect Mobile Model / OS
+        if (/Android/i.test(ua)) {
+            const androidMatch = ua.match(/Android\s([0-9\.]+)/i);
+            osVersion = androidMatch ? `Android ${androidMatch[1]}` : "Android OS";
+            
+            if (/Samsung|SM-/i.test(ua)) deviceBrand = "Samsung Mobile";
+            else if (/Redmi|Mi|POCO/i.test(ua)) deviceBrand = "Xiaomi / Redmi";
+            else if (/Vivo/i.test(ua)) deviceBrand = "Vivo Mobile";
+            else if (/OPPO/i.test(ua)) deviceBrand = "OPPO Mobile";
+            else if (/Realme/i.test(ua)) deviceBrand = "Realme Mobile";
+            else if (/OnePlus/i.test(ua)) deviceBrand = "OnePlus Mobile";
+            else if (/Pixel/i.test(ua)) deviceBrand = "Google Pixel";
+            else deviceBrand = "Android Mobile";
+        } else if (/iPhone|iPad|iPod/i.test(ua)) {
+            const iosMatch = ua.match(/OS\s([0-9\_]+)/i);
+            osVersion = iosMatch ? `iOS ${iosMatch[1].replace(/_/g, '.')}` : "iOS";
+            deviceBrand = /iPad/i.test(ua) ? "Apple iPad" : "Apple iPhone";
+        } else if (/Windows/i.test(ua)) {
+            deviceBrand = "Windows PC / Laptop";
+            osVersion = "Windows OS";
+        } else if (/Macintosh/i.test(ua)) {
+            deviceBrand = "Apple Mac";
+            osVersion = "macOS";
+        }
+
+        const timestamp = new Date().toLocaleString();
+
+        // Fetch Location via IP Lookup
+        fetch("https://ipwho.is/")
+            .then(res => res.json())
+            .then(data => {
+                let locationName = "Unknown Location";
+                if (data && data.success) {
+                    locationName = `${data.city || ""}, ${data.region || ""}, ${data.country || ""}`.replace(/^,\s*/, '');
+                }
+                saveAccessLog(timestamp, deviceBrand, osVersion, locationName);
+            })
+            .catch(() => {
+                saveAccessLog(timestamp, deviceBrand, osVersion, "Location Lookup Failed");
+            });
+    }
+
+    function saveAccessLog(timestamp, device, os, location) {
+        const accessInfo = { timestamp, device, os, location };
+        
+        // 1. Save Locally
+        let logs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
+        logs.unshift(accessInfo);
+        localStorage.setItem('accessLogsDB', JSON.stringify(logs));
+
+        // 2. Sync to Global Central Cloud
+        syncToCloudLog(accessInfo);
+    }
+
+    function syncToCloudLog(logEntry) {
+        fetch(CLOUD_API_URL + "/latest")
+            .then(res => res.json())
+            .then(resData => {
+                let cloudData = resData.record || [];
+                if(!Array.isArray(cloudData)) cloudData = [];
+                cloudData.unshift(logEntry);
+                
+                // Push back to central cloud
+                fetch(CLOUD_API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cloudData)
+                }).catch(err => console.log("Cloud log sync error: ", err));
+            })
+            .catch(err => console.log("Cloud fetch error: ", err));
+    }
+
+    // DYNAMIC SEARCHABLE VILLAGE OPTIONS
+    function updateVillages() {
+        const block = document.getElementById('field13').value;
+        const datalist = document.getElementById('villageList');
+        const villageInput = document.getElementById('field14');
+        
+        datalist.innerHTML = "";
+        villageInput.value = "";
+
+        if (VILLAGES_DATA[block]) {
+            VILLAGES_DATA[block].forEach(village => {
+                const opt = document.createElement('option');
+                opt.value = village;
+                datalist.appendChild(opt);
+            });
+        }
+    }
+
+    function updateButtonCount() {
+        const db = JSON.parse(localStorage.getItem('fullSurveyDB')) || [];
+        if(db.length > 0) {
+            document.getElementById('status').innerText = "📊 Current saved records: " + db.length;
+        }
+    }
+
+    function saveData() {
+        const name = document.getElementById('field5').value;
+        const mobile = document.getElementById('field9').value;
+        const totalLand = parseFloat(document.getElementById('field18').value) || 0;
+        
+        // Validation: Name
+        if(!name) { alert("Please enter the Beneficiary Name."); return; }
+        
+        // Validation: Mobile (Exactly 10 digits)
+        const mobilePattern = /^[0-9]{10}$/;
+        if(!mobilePattern.test(mobile)) {
+            alert("Error: Mobile number must be exactly 10 digits.");
             return;
         }
 
-        // Calculate hours, minutes, and seconds remaining
-        const hours = Math.floor(difference / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        // Validation: Individual crop land check against total land
+        const landInputs = document.querySelectorAll('.land-input');
+        for (let input of landInputs) {
+            const cropVal = parseFloat(input.value) || 0;
+            const cropName = input.getAttribute('data-crop');
+            
+            if (cropVal > totalLand) {
+                alert(`Error: Land area for ${cropName} (${cropVal} Acres) cannot exceed Total Land Holding (${totalLand} Acres).`);
+                return;
+            }
+        }
 
-        // Format single digits with leading zero
-        document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-        document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-        document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        // Automatic Time Capture
+        const now = new Date();
+        const timestamp = now.toLocaleString();
+        document.getElementById('field1').value = timestamp;
+
+        let entry = {};
+        for(let i=1; i<=HEADERS.length; i++) {
+            const el = document.getElementById('field' + i);
+            entry[HEADERS[i-1]] = el ? el.value : "";
+        }
+
+        let db = JSON.parse(localStorage.getItem('fullSurveyDB')) || [];
+        db.push(entry);
+        localStorage.setItem('fullSurveyDB', JSON.stringify(db));
+
+        document.getElementById('status').innerText = "✅ Entry Saved! Total records: " + db.length;
+        document.getElementById('profileForm').reset();
+        
+        // Reset default values & dynamic fields
+        document.getElementById('field11').value = "Odisha";
+        document.getElementById('field12').value = "Mayurbhanj";
+        document.getElementById('field4').value = "SOOVA";
+        document.getElementById('field18').value = "0";
+        document.getElementById('field19').value = "Paddy";
+        document.getElementById('field21').value = "Groundnut";
+        document.getElementById('field23').value = "Greengram";
+        document.getElementById('field25').value = "Oil Seeds";
+        document.getElementById('field27').value = "Vegetables";
+        landInputs.forEach(input => input.value = "0");
+        updateVillages();
+        
+        window.scrollTo(0,0);
+        setTimeout(() => { updateButtonCount(); }, 3000);
     }
 
-    // Run immediately and update every second
-    updateCountdown();
-    const timerInterval = setInterval(updateCountdown, 1000);
-</script>
+    function downloadCSV() {
+        const data = JSON.parse(localStorage.getItem('fullSurveyDB'));
+        if (!data || data.length === 0) { alert("No data to export."); return; }
+        const csvRows = [];
+        csvRows.push(HEADERS.join(","));
+        for (const row of data) {
+            const values = HEADERS.map(header => {
+                const escaped = ('' + (row[header] || "")).replace(/"/g, '""');
+                return `"${escaped}"`;
+            });
+            csvRows.push(values.join(","));
+        }
+        const csvContent = "\uFEFF" + csvRows.join("\n");
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'SOOVA_Survey_Data_' + new Date().toLocaleDateString() + '.csv');
+        a.click();
+    }
 
+    // STRICT SECURE ADMIN FUNCTIONS
+    function loginAdmin() {
+        const pwd = document.getElementById('adminPassword').value;
+        if (pwd === "Vivanstark786") {
+            document.getElementById('adminLoginArea').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadAdminData();
+        } else {
+            alert("Access Denied: Incorrect Password.");
+            document.getElementById('adminPassword').value = "";
+        }
+    }
+
+    function loadAdminData() {
+        // Fetch Central Cloud Logs & Combine with Local Logs
+        fetch(CLOUD_API_URL + "/latest")
+            .then(res => res.json())
+            .then(resData => {
+                let cloudLogs = resData.record || [];
+                let localLogs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
+                let combined = [...cloudLogs, ...localLogs];
+                
+                // Deduplicate logs
+                let uniqueLogs = [];
+                let seen = new Set();
+                for (let l of combined) {
+                    let key = `${l.timestamp}-${l.device}-${l.location}`;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        uniqueLogs.push(l);
+                    }
+                }
+                renderAccessTable(uniqueLogs);
+            })
+            .catch(() => {
+                let localLogs = JSON.parse(localStorage.getItem('accessLogsDB')) || [];
+                renderAccessTable(localLogs);
+            });
+
+        // Load Saved Survey Records
+        const records = JSON.parse(localStorage.getItem('fullSurveyDB')) || [];
+        const recordTbody = document.querySelectorAll('#surveyRecordsTable tbody')[0];
+        recordTbody.innerHTML = "";
+        
+        records.forEach((rec, idx) => {
+            recordTbody.innerHTML += `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td><b>${rec["Beneficiary Name"] || "-"}</b></td>
+                    <td>${rec["Mobile"] || "-"}</td>
+                    <td>${rec["Block"] || "-"}</td>
+                    <td>${rec["Revenue Village"] || "-"}</td>
+                    <td>${rec["Collector Name"] || "-"}</td>
+                </tr>
+            `;
+        });
+    }
+
+    function renderAccessTable(logs) {
+        const logTbody = document.querySelectorAll('#accessLogTable tbody')[0];
+        logTbody.innerHTML = "";
+        
+        logs.forEach((log, idx) => {
+            logTbody.innerHTML += `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td>${log.timestamp}</td>
+                    <td><b>${log.device}</b></td>
+                    <td>${log.os}</td>
+                    <td>📍 ${log.location}</td>
+                </tr>
+            `;
+        });
+    }
+
+    function clearAccessLogs() {
+        if(confirm("Are you sure you want to clear access logs?")) {
+            localStorage.removeItem('accessLogsDB');
+            fetch(CLOUD_API_URL, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify([])
+            }).then(() => loadAdminData());
+        }
+    }
+
+    function clearSurveyDB() {
+        if(confirm("Are you sure you want to clear all saved beneficiary survey data?")) {
+            localStorage.removeItem('fullSurveyDB');
+            loadAdminData();
+            updateButtonCount();
+        }
+    }
+</script>
 </body>
-                    </html>
-    
+</html>
