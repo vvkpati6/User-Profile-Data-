@@ -713,7 +713,7 @@
                 <span class="step-badge">🔒</span>
                 <span class="section-title" style="color: var(--danger);">Administration & Global Access Tracking</span>
             </div>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 0;">Restricted access area. Displays visitor telemetry and locally stored beneficiary submissions.</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 0;">Restricted access area. Displays global visitor telemetry and locally stored beneficiary submissions.</p>
             
             <div id="adminLoginArea" class="grid" style="grid-template-columns: 2fr 1fr;">
                 <input type="password" id="adminPassword" placeholder="Enter Admin Password" autocomplete="off" spellcheck="false">
@@ -725,7 +725,7 @@
                     <h4 style="margin: 0; font-size: 14px;">📱 Global Access Logs (Devices & Location)</h4>
                     <div>
                         <button class="sm-btn" onclick="loadAdminData()" style="background: var(--soova-blue);">🔄 Refresh</button>
-                        <button class="sm-btn" onclick="clearAccessLogs()" style="background: var(--danger);">Clear Logs</button>
+                        <button class="sm-btn" onclick="clearAccessLogs()" style="background: var(--danger);">Clear Local Logs</button>
                     </div>
                 </div>
                 
@@ -995,7 +995,8 @@
         ]
     };
 
-    const GOOGLE_SCRIPT_URL = "";
+    // CONNECTED GOOGLE APPS SCRIPT WEB APP URL
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz43YL10S9v6c5O3ntez40tmdgFZJOK-EKdzfO81VEjCkVvrw7A4NxIit8GrqIOOeGIow/exec";
 
     function initForm() {
         trackLinkAccess();
@@ -1294,7 +1295,7 @@
 
     function loadAdminData() {
         const logTbody = document.querySelector('#accessLogTable tbody');
-        logTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">⏳ Loading logs...</td></tr>`;
+        logTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">⏳ Loading global logs...</td></tr>`;
 
         if (GOOGLE_SCRIPT_URL.startsWith("http")) {
             fetch(GOOGLE_SCRIPT_URL)
